@@ -1,0 +1,16 @@
+<?xml?>
+<workspace>
+	<settings>
+		<label>pro</label>
+	</settings>
+	<users>
+		<user>
+			<path>pro.jcu</path>
+		</user>
+	</users>
+	<projects>
+		<project>
+			<path>pro.jcp</path>
+		</project>
+	</projects>
+</workspace>

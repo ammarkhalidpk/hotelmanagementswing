@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="gb2312"?>
+<HotelManagement>
+	<characterset type="GBK" />
+	<Database driver="com.mysql.jdbc.Driver"
+		URL="jdbc:mysql://127.0.0.1:3306/ginshop?characterEncoding=GBK" 
+		user="root" 
+		password=""
+		maxCount="10" 
+		connCount="1" 
+		stringtype="longtext" 
+		numbertype="bigint"
+		SQLStatement="dbtools.MysqlStatement" />
+</HotelManagement>
