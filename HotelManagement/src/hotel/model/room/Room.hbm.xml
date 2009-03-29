@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-access="field">
+
+  <class name="hotel.model.room.Room" 
+         table="HOTEL_ROOM"
+         discriminator-value="A">
+    <id name="id" column="ID_"><generator class="native" /></id>
+    <discriminator type="char" column="CLASS_"/>
+
+
+    <property name="roomNum"         column="ROOMNUM_" />
+    <property name="type"    column="TYPE_" />
+    <property name="floor"     column="FLOOR_" />
+    <property name="prise"     column="PRISE_" />
+    
+    
+    
+    <property name="description"  column="DESCRIPTION_" length="4000" />
+    
+
+  </class>
+
+</hibernate-mapping>
