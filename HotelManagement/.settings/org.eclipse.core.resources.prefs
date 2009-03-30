@@ -1,4 +1,4 @@
-#Sun Mar 29 23:20:41 CST 2009
+#Mon Mar 30 23:06:16 CST 2009
 eclipse.preferences.version=1
 encoding//src/dbtools/BSConnection.java=GBK
 encoding//src/dbtools/ConnectionPool.java=GBK
@@ -7,4 +7,10 @@ encoding//src/dbtools/MysqlStatement.java=GBK
 encoding//src/dbtools/PropertiesService.java=GBK
 encoding//src/dbtools/SQLStatement.java=GBK
 encoding//src/dbtools/StringTool.java=GBK
+encoding//src/hotel/form/context/BaseInfo.java=GBK
+encoding//src/hotel/form/context/DingRoom.java=GBK
+encoding//src/hotel/form/context/FootInfo.java=GBK
+encoding//src/hotel/form/context/GuestroomStandardFrame1.java=GBK
+encoding//src/hotel/form/context/UserFrame.java=GBK
+encoding//src/hotel/form/context/UseraddFrame.java=GBK
 encoding/<project>=GBK
