@@ -17,6 +17,7 @@ import hotel.form.context.Statistics;
 import hotel.form.context.UserFrame;
 import hotel.form.context.VIPGenerate;
 import hotel.form.context.WelcomeFrame;
+import hotel.util.MessageUtil;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -43,7 +44,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import util.MessageUtil;
 
 
 
@@ -83,7 +83,7 @@ public class MainFrame extends JFrame {
 		this.setSize((int)screenSize.getWidth(), ((int)screenSize.getHeight() - 30));
 		// this.setResizable(false);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
-		//this.setLocationRelativeTo(this);// ¾ÓÖÐÏÔÊ¾
+		//this.setLocationRelativeTo(this);// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
 		this.setLocation(0, 0);
 		this.setVisible(true);
 	}
@@ -115,23 +115,23 @@ public class MainFrame extends JFrame {
 				
 			this.registerFunction("user", "MainFrame.user.manage", UserFrame.class);
 			
-			//Í³¼Æ²éÑ¯
+			//Í³ï¿½Æ²ï¿½Ñ¯
 			this.registerFunction("statistics", "MainFrame.btnStatistics", Statistics.class);
-			//½Ó´ý¹ÜÀí
+			//ï¿½Ó´ï¿½ï¿½ï¿½ï¿½
 			this.registerFunction("btnReceive", "MainFrame.btnReceive", Receive.class);
-			//ÊÛ·¿¹¤¾ß
+			//ï¿½Û·ï¿½ï¿½ï¿½ï¿½ï¿½
 			this.registerFunction("btnSell", "MainFrame.btnSell", RoomSell.class);
-			//ÍòÄÜ²éÕÒ
+			//ï¿½ï¿½ï¿½Ü²ï¿½ï¿½ï¿½
 			this.registerFunction("btnQuery", "MainFrame.btnQuery", AllQuery.class);
-			//¿Íµ¥²éÕÒ
+			//ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½
 			this.registerFunction("btnFormQuery", "MainFrame.btnFormQuery", FormQuery.class);
-			//ÊÕÒø¹ÜÀí
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			this.registerFunction("btnCashier", "MainFrame.btnCashier", Cashier.class);
-			//Ç°Ì¨²éºË¹ÜÀí
+			//Ç°Ì¨ï¿½ï¿½Ë¹ï¿½ï¿½ï¿½
 			this.registerFunction("btnFrontDeskCheck", "MainFrame.btnFrontDeskCheck", FrontDeskCheck.class);
-			//¿Í»§ÀúÊ·ºÏÔ¼¹ÜÀí
+			//ï¿½Í»ï¿½ï¿½ï¿½Ê·ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½
 			this.registerFunction("btnHistoryTreaty", "MainFrame.btnHistoryTreaty", HistoryTreaty.class);
-			//VIPÉú³É¹¦ÄÜ
+			//VIPï¿½ï¿½É¹ï¿½ï¿½ï¿½
 			this.registerFunction("btnVIPGenerate", "MainFrame.btnVIPGenerate", VIPGenerate.class);
 
 			this.registerFunction("help", "MainFrame.help", HelpFrame.class);

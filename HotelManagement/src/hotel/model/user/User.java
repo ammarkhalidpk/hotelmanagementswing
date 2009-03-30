@@ -1,11 +1,11 @@
 package hotel.model.user;
 
 import hotel.model.BaseModel;
+import hotel.util.MessageUtil;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import util.MessageUtil;
 
 public class User extends BaseModel {
 

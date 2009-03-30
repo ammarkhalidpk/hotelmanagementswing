@@ -4,6 +4,7 @@ import hotel.form.main.MainFrame;
 import hotel.model.user.User;
 import hotel.service.CommandService;
 import hotel.service.user.UserServiceCommand;
+import hotel.util.MessageUtil;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -23,7 +24,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import util.MessageUtil;
 
 public class LoginFrame extends JFrame implements ActionListener {
 	/**

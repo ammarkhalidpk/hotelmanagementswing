@@ -1,12 +1,12 @@
-#Mon Mar 30 23:06:16 CST 2009
+#Mon Mar 30 23:47:50 CST 2009
 eclipse.preferences.version=1
-encoding//src/dbtools/BSConnection.java=GBK
-encoding//src/dbtools/ConnectionPool.java=GBK
-encoding//src/dbtools/DBTools.java=GBK
-encoding//src/dbtools/MysqlStatement.java=GBK
-encoding//src/dbtools/PropertiesService.java=GBK
-encoding//src/dbtools/SQLStatement.java=GBK
-encoding//src/dbtools/StringTool.java=GBK
+encoding//src/hotel/dbtools/BSConnection.java=GBK
+encoding//src/hotel/dbtools/ConnectionPool.java=GBK
+encoding//src/hotel/dbtools/DBTools.java=GBK
+encoding//src/hotel/dbtools/MysqlStatement.java=GBK
+encoding//src/hotel/dbtools/PropertiesService.java=GBK
+encoding//src/hotel/dbtools/SQLStatement.java=GBK
+encoding//src/hotel/dbtools/StringTool.java=GBK
 encoding//src/hotel/form/context/BaseInfo.java=GBK
 encoding//src/hotel/form/context/DingRoom.java=GBK
 encoding//src/hotel/form/context/FootInfo.java=GBK

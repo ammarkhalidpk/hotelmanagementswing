@@ -1,4 +1,4 @@
-package util;
+package hotel.util;
 
 import java.io.IOException;
 import java.io.InputStream;

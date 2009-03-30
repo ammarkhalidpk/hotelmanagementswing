@@ -1,4 +1,4 @@
-package dbtools;
+package hotel.dbtools;
 
 import java.util.Hashtable;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package dbtools;
+package hotel.dbtools;
 
 import java.io.IOException;
 import java.io.InputStream;

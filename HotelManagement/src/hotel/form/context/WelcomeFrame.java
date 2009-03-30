@@ -1,6 +1,7 @@
 package hotel.form.context;
 
 import hotel.form.main.MainFrame;
+import hotel.util.MessageUtil;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -10,7 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import util.MessageUtil;
 
 public class WelcomeFrame extends BasePanel {
 	/**

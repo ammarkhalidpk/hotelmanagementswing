@@ -4,6 +4,7 @@ import hotel.form.main.MainFrame;
 import hotel.model.room.Room;
 import hotel.service.CommandService;
 import hotel.service.room.RoomServiceCommand;
+import hotel.util.MessageUtil;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -19,7 +20,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import util.MessageUtil;
 
 public class GuestroomStandardFrame extends BasePanel {
 	/**

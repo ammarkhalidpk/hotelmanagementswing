@@ -1,4 +1,4 @@
-package dbtools;
+package hotel.dbtools;
 
 import java.util.Collection;
 import java.util.LinkedList;
