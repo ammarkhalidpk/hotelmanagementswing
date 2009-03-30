@@ -2,7 +2,7 @@ package hotel.model.user;
 
 import hotel.model.BaseModel;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import util.MessageUtil;
@@ -13,13 +13,17 @@ public class User extends BaseModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static Map fieldMapLabel = new HashMap();
+	private static Map fieldMapLabel = new LinkedHashMap();
 	static {
 		fieldMapLabel.put("id", MessageUtil.getMessage("User.id"));
 		fieldMapLabel.put("name", MessageUtil.getMessage("User.name"));
 		fieldMapLabel.put("loginName", MessageUtil.getMessage("User.loginName"));
 		fieldMapLabel.put("password", MessageUtil.getMessage("User.password"));
 		fieldMapLabel.put("description", MessageUtil.getMessage("User.description"));
+	}
+	
+	public static Map getFieldMapLabel() {
+		return fieldMapLabel;
 	}
 	
 	protected long id;
@@ -31,6 +35,7 @@ public class User extends BaseModel {
 	protected String password;
 	
 	protected String description;
+	
 	
 	public User() {
 	}

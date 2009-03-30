@@ -14,8 +14,8 @@
   
     <property name="name"         column="NAME_" />
     <property name="loginName"    column="LOGINNAME_" />
-    <property name="description"  column="DESCRIPTION_" length="4000" />
     <property name="password"     column="PASSWORD_" />
+    <property name="description"  column="DESCRIPTION_" length="4000" />
 
 <!--     
     <many-to-one name="task"

@@ -3,6 +3,11 @@
 package hotel.form.context;
 
 import hotel.form.main.MainFrame;
+import hotel.model.room.Room;
+import hotel.model.user.User;
+import hotel.service.CommandService;
+import hotel.service.room.RoomServiceCommand;
+import hotel.service.user.UserServiceCommand;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -10,9 +15,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -28,16 +36,15 @@ public class UserFrame extends BasePanel {
 	private javax.swing.JTextField txtName, txaType;
 	private javax.swing.JPasswordField pwd;
 	private JTable tabShow;
-	private javax.swing.JButton btnInsert, btnDelete, btnSelect, btnExit;
+	private javax.swing.JButton btnInsert, btnDelete, btnSelect;
 	private javax.swing.JComboBox cob;
 
 	public UserFrame(MainFrame parent) {
 		super(parent);
-		//dbo = new DatabaseUser();
 		tabShow = new JTable();
+		this.refresh();
 
 		this.setLayout(new BorderLayout());
-		// me.add(new NorthPanel(),BorderLayout.NORTH);
 		this.add(new JScrollPane(tabShow), BorderLayout.CENTER);
 		this.add(new SouthPanel(), BorderLayout.SOUTH);
 
@@ -52,21 +59,16 @@ public class UserFrame extends BasePanel {
 			btnInsert = new JButton("增加");
 			btnDelete = new JButton("删除");
 			btnSelect = new JButton("查询");
-			// btnExit = new JButton("退出");
 
 			add(btnInsert);
 			add(btnDelete);
 			add(btnSelect);
-			// add(btnExit);
 
 			btnInsert.addActionListener(this);
 			btnInsert.setActionCommand("inser");
 
 			btnDelete.addActionListener(this);
 			btnDelete.setActionCommand("dele");
-
-			// btnExit.addActionListener(this);
-			// btnExit.setActionCommand("exit");
 
 			btnSelect.addActionListener(this);
 			btnSelect.setActionCommand("sele");
@@ -76,24 +78,31 @@ public class UserFrame extends BasePanel {
 		public void actionPerformed(ActionEvent e) {
 			String strcmd = e.getActionCommand();
 			if (strcmd.equals("sele")) {
-//				DefaultTableModel use = new DefaultTableModel(dbo
-//						.getDataByTabname(), dbo.getColumnNamesByTabname());
-//				tabShow.setModel(use);
+				refresh();
 			}
 			if (strcmd.equals("inser")) {
-				//new UseraddFrame();
+				new UseraddFrame(UserFrame.this);
 			}
 			if (strcmd.equals("dele")) {
-				//new UserdelFrame();
+				int selectedRowIndex = tabShow.getSelectedRow();
+				if (selectedRowIndex != -1) {
+					String id = (String) tabShow.getModel().getValueAt(selectedRowIndex, 0);
+					if (JOptionPane.showConfirmDialog(UserFrame.this, "确定删除序号为：" + id + "的用户吗？") == JOptionPane.OK_OPTION) {
+						Map condition = new HashMap();
+						condition.put("id", id);
+						CommandService.getInstance().execute(new UserServiceCommand("delete", condition));
+						refresh();
+					}
+				}
 			}
-			// if(strcmd.equals("exit")){
-			//	         		
-			// }
-			//            	
 		}
-
 	}
-
+	
+	public void refresh() {
+		DefaultTableModel use = new DefaultTableModel((Object[][]) CommandService.getInstance().execute(new UserServiceCommand("getAllAsArray")), User.getFieldMapLabel().values().toArray());
+		tabShow.setModel(use);
+	}
+	
 	public void access(MainFrame vistor) {
 		vistor.visit(this);
 	}

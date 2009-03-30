@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -74,11 +75,15 @@ public class GuestroomStandardFrame extends BasePanel {
 			}
 			if (strcmd.equals("del")) {
 				int selectedRowIndex = tabShow.getSelectedRow();
-				String id = (String) tabShow.getModel().getValueAt(selectedRowIndex, 0);
-				Map condition = new HashMap();
-				condition.put("id", id);
-				CommandService.getInstance().execute(new RoomServiceCommand("delete", condition));
-				refresh();
+				if (selectedRowIndex != -1) {
+					String id = (String) tabShow.getModel().getValueAt(selectedRowIndex, 0);
+					if (JOptionPane.showConfirmDialog(instance, "确定删除序号为：" + id + "的房间吗？") == JOptionPane.OK_OPTION) {
+						Map condition = new HashMap();
+						condition.put("id", id);
+						CommandService.getInstance().execute(new RoomServiceCommand("delete", condition));
+						refresh();
+					}
+				}
 			}
 			if (strcmd.equals("sel")) {
 				refresh();

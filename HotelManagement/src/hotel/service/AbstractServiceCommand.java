@@ -55,7 +55,8 @@ public abstract class AbstractServiceCommand implements Command {
 				String[] row = new String[columns.length];
 				for (int i = 0; i < columns.length; i++) {
 					String attName = columns[i];
-					row[i] = model.getAttributeValue(attName).toString();
+					Object attValue = model.getAttributeValue(attName);
+					row[i] = attValue != null ? attValue.toString() : attValue + "";
 				}
 				result[count++] = row;
 			}
