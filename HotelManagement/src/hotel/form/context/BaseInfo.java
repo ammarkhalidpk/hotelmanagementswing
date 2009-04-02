@@ -152,7 +152,7 @@ public class BaseInfo extends BasePanel implements ActionListener {
 		}
 	}
 
-	void refresh() {
+	public void refresh() {
 		/*DefaultTableModel dtModel = new DefaultTableModel(this.Mdbo
 				.getDataByTabname(), Mdbo.getColumnNamesByTabname());
 		table1.setModel(dtModel);*/

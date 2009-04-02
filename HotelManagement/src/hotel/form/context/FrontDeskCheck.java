@@ -19,4 +19,10 @@ public class FrontDeskCheck extends BasePanel {
 
 	}
 
+	@Override
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

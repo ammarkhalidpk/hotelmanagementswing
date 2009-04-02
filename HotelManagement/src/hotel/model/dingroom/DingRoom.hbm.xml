@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-access="field">
+
+  <class name="hotel.model.dingroom.DingRoom" 
+         table="HOTEL_DINGROOM"
+         discriminator-value="A">
+    <id name="id" column="ID_"><generator class="native" /></id>
+    <discriminator type="char" column="CLASS_"/>
+
+	<property name="start"        column="START_" />
+    <property name="end"    	  column="END_" />
+    <property name="discount"     column="DISCOUNT_" />
+    <property name="description"  column="DESCRIPTION_" length="4000" />
+
+	<many-to-one name="user"
+                 column="USER_"
+                 foreign-key="FK_DINGROOM_USER"
+                 index="IDX_DINGROOM_USER"/>
+    <many-to-one name="room"
+                 column="ROOM_"
+                 foreign-key="FK_DINGROOM_ROOM"
+                 index="IDX_DINGROOM_ROOM"/>
+
+  </class>
+
+</hibernate-mapping>

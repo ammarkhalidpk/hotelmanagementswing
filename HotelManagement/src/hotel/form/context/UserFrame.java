@@ -3,8 +3,11 @@
 package hotel.form.context;
 
 import hotel.form.main.MainFrame;
+import hotel.model.BaseModel;
 import hotel.model.room.Room;
+import hotel.model.user.Guest;
 import hotel.model.user.User;
+import hotel.model.user.VIPUser;
 import hotel.service.CommandService;
 import hotel.service.room.RoomServiceCommand;
 import hotel.service.user.UserServiceCommand;
@@ -16,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -99,7 +104,21 @@ public class UserFrame extends BasePanel {
 	}
 	
 	public void refresh() {
-		DefaultTableModel use = new DefaultTableModel((Object[][]) CommandService.getInstance().execute(new UserServiceCommand("getAllAsArray")), User.getFieldMapLabel().values().toArray());
+		Map cols = new LinkedHashMap();
+		String[] userCol = (String[]) User.getFieldMapLabel().values().toArray(new String[User.getFieldMapLabel().values().size()]);
+		String[] guestCol = (String[]) Guest.getFieldMapLabel().values().toArray(new String[Guest.getFieldMapLabel().values().size()]);
+		String[] vipCol = (String[]) VIPUser.getFieldMapLabel().values().toArray(new String[VIPUser.getFieldMapLabel().values().size()]);
+		for (int i = 0; i < userCol.length; i++) {
+			cols.put(userCol[i], "");
+		}
+		for (int i = 0; i < guestCol.length; i++) {
+			cols.put(guestCol[i], "");
+		}
+		for (int i = 0; i < vipCol.length; i++) {
+			cols.put(vipCol[i], "");
+		}
+		String[] columns = (String[]) cols.keySet().toArray(new String[cols.size()]);
+		DefaultTableModel use = new DefaultTableModel((Object[][]) CommandService.getInstance().execute(new UserServiceCommand("getAllAsArray")), columns);
 		tabShow.setModel(use);
 	}
 	

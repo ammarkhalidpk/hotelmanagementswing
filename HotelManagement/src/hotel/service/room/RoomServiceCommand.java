@@ -17,8 +17,9 @@ public class RoomServiceCommand extends AbstractServiceCommand {
 	}
 
 	public Object execute(ExecutionContext executionContext) {
-		if (this.command.equalsIgnoreCase("get")) {
-			
+		if (this.command.equalsIgnoreCase("getByRoomNumber")) {
+			String roomNum = (String) this.condition.get("roomNum");
+			return executionContext.getSession().createQuery("from hotel.model.room.Room room where room.roomNum = :roomNum").setParameter("roomNum", roomNum).uniqueResult();
 		} else if (this.command.equalsIgnoreCase("delete")) {
 			String id = (String) this.condition.get("id");
 			Object obj = get(executionContext, Long.parseLong(id));
@@ -38,6 +39,10 @@ public class RoomServiceCommand extends AbstractServiceCommand {
 
 	private Object get(ExecutionContext executionContext, long id) {
 		return executionContext.getSession().createQuery("from hotel.model.room.Room room where room.id = :id").setParameter("id", id).uniqueResult();
+	}
+	
+	public static String getByRoomNumberCommand() {
+		return "getByRoomNumber";
 	}
 
 }

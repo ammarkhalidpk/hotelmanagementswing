@@ -2,13 +2,27 @@ package hotel.service;
 
 import hotel.model.BaseModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 
 public abstract class AbstractServiceCommand implements Command {
+	
+	private static final String SAVE = "save";
+	
+	private static final String DELETE = "delete";
+	
+	private static final String UPDATE = "update";
+	
+	private static final String QUERY = "query";
+	
+	private static final String GETALLASARRAYCOMMAND = "getAllAsArray";
+	
+	private static final String SAVEORUPDATEUSER = "saveOrUpdate";
 
 	protected String command;
 	
@@ -43,19 +57,32 @@ public abstract class AbstractServiceCommand implements Command {
 	protected String[][] toArray(List list) {
 		BaseModel model = null;
 		if (list.size() > 0) {
+			Map cols = new LinkedHashMap();
+			for (Iterator iter = list.iterator(); iter.hasNext(); ) {
+				BaseModel m = (BaseModel) iter.next();
+				String[] columns = m.getAttributeNames();
+				for (int i = 0; i < columns.length; i++) {
+					cols.put(columns[i], "");
+				}
+			}
+			String[] columns = (String[]) cols.keySet().toArray(new String[cols.size()]);
 			int count = 0;
 			String[][] result = new String[list.size()][0];
 			model = (BaseModel) list.get(0);
 			//表头
 			//result[count++] = model.getAttributeNames();
-			String[] columns = model.getAttributeNames();
 			//表体
 			for (Iterator iter = list.iterator(); iter.hasNext(); ) {
 				model = (BaseModel) iter.next();
 				String[] row = new String[columns.length];
 				for (int i = 0; i < columns.length; i++) {
 					String attName = columns[i];
-					Object attValue = model.getAttributeValue(attName);
+					Object attValue = null;
+					try {
+						attValue = model.getAttributeValue(attName);
+					} catch (NoSuchMethodException e) {
+						attValue = "";
+					}
 					row[i] = attValue != null ? attValue.toString() : attValue + "";
 				}
 				result[count++] = row;
@@ -65,5 +92,20 @@ public abstract class AbstractServiceCommand implements Command {
 			return null;
 		}
 	}
-
+	
+	public static String getAllAsArrayCommand() {
+		return GETALLASARRAYCOMMAND;
+	}
+	
+	public static String getSaveOrUpdateCommand() {
+		return SAVEORUPDATEUSER;
+	}
+	
+	public static String getDeleteCommand() {
+		return DELETE;
+	}
+	
+	public static String getAllCommand() {
+		return "getAll";
+	}
 }

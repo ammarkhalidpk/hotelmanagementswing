@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 public abstract class BasePanel extends JPanel implements Accessable {
 	protected JFrame parent;
 	
+	public abstract void refresh();
+	
 	public BasePanel(MainFrame parent) {
 		this.parent = parent;
 	}

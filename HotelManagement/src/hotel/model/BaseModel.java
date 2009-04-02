@@ -66,7 +66,7 @@ public abstract class BaseModel implements Serializable {
 		return false;
 	}
 
-	public Object getAttributeValue(String attName) {
+	public Object getAttributeValue(String attName) throws NoSuchMethodException {
 		String getter = "get" + attName.substring(0, 1).toUpperCase() + attName.substring(1);
 		try {
 			Method method = this.getClass().getDeclaredMethod(getter, null);
@@ -74,7 +74,7 @@ public abstract class BaseModel implements Serializable {
 		} catch (SecurityException e) {
 			throw new RuntimeException(e);
 		} catch (NoSuchMethodException e) {
-			throw new RuntimeException(e);
+			throw e;
 		} catch (IllegalArgumentException e) {
 			throw new RuntimeException(e);
 		} catch (IllegalAccessException e) {

@@ -19,4 +19,10 @@ public class AllQuery extends BasePanel {
 
 	}
 
+	@Override
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

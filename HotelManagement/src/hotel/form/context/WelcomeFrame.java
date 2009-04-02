@@ -43,4 +43,10 @@ public class WelcomeFrame extends BasePanel {
 	public void access(MainFrame vistor) {
 		vistor.visit(this);
 	}
+
+	@Override
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
 }

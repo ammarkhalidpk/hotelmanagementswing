@@ -28,6 +28,10 @@ import javax.swing.SwingConstants;
 
 public class FootInfo extends BasePanel implements ActionListener, ItemListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String[] strtf = { "0" };
 	// String[] strfj={"101","102","103","201","202","203","301","302","303"};
 	public JButton jButton1, jButton2;
@@ -231,5 +235,11 @@ public class FootInfo extends BasePanel implements ActionListener, ItemListener 
 	
 	public void access(MainFrame vistor) {
 		vistor.visit(this);
+	}
+
+	@Override
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
 	}
 }

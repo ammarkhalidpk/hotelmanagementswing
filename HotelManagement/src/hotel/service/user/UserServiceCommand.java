@@ -34,8 +34,15 @@ public class UserServiceCommand extends AbstractServiceCommand {
 			long id = Long.parseLong((String) this.condition.get("id"));
 			User user = (User) executionContext.getSession().createQuery("from hotel.model.user.User user where user.id = :id").setParameter("id", id).uniqueResult();
 			executionContext.getSession().delete(user);
+		} else if (this.command.equals(getUserByIdCard())) {
+			String idCard = (String) this.condition.get("idCard");
+			return executionContext.getSession().createQuery("from hotel.model.user.User user where user.identifier = :idCard").setParameter("idCard", idCard).uniqueResult();
 		}
 		return null;
+	}
+
+	public static String getUserByIdCard() {
+		return "getUserByIdCard";
 	}
 
 }

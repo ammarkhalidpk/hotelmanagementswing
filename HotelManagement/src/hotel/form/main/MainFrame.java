@@ -17,6 +17,7 @@ import hotel.form.context.Statistics;
 import hotel.form.context.UserFrame;
 import hotel.form.context.VIPGenerate;
 import hotel.form.context.WelcomeFrame;
+import hotel.form.context.dingRoomFrame1;
 import hotel.util.MessageUtil;
 
 import java.awt.BorderLayout;
@@ -218,5 +219,9 @@ public class MainFrame extends JFrame {
 
 	public void visit(VIPGenerate generate) {
 		center.add(generate, BorderLayout.CENTER);
+	}
+
+	public void visit(dingRoomFrame1 dingRoomFrame1) {
+		center.add(dingRoomFrame1, BorderLayout.CENTER);
 	}
 }

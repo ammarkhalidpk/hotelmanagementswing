@@ -41,4 +41,10 @@ public class VIPGenerate extends BasePanel {
 		vistor.visit(this);
 	}
 
+	@Override
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
