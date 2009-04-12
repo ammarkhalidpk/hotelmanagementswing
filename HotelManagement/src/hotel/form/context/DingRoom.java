@@ -37,6 +37,7 @@ public class DingRoom extends BasePanel {
 		super(parent);
 
 		tabShow = new JTable();
+		refresh();
 
 		this.setLayout(new BorderLayout());
 		this.add(new JScrollPane(tabShow), BorderLayout.CENTER);

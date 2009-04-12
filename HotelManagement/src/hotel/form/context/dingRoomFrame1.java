@@ -10,6 +10,8 @@ import hotel.service.CommandService;
 import hotel.service.dingroom.DingRoomServiceCommand;
 import hotel.service.room.RoomServiceCommand;
 import hotel.service.user.UserServiceCommand;
+import hotel.util.DateUtil;
+import hotel.util.ui.mydatechooser.MyDateChooser;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -17,6 +19,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -64,7 +68,7 @@ public class dingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 	JLabel jLabel17 = new JLabel();
 	JTextField jTextField1 = new JTextField();
 	JTextField jTextField2 = new JTextField();
-	JTextField jTextField3 = new JTextField();
+	JTextField dingRoomDate = new JTextField();
 	JLabel jLabel9 = new JLabel();
 	JTextField jTextField4 = new JTextField();
 	private Room selectedRoom;
@@ -79,7 +83,7 @@ public class dingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 		jLabel1.setText("客房编号");
 		jLabel1.setBounds(new Rectangle(17, 14, 53, 25));
 		jComboBox1.setBounds(new Rectangle(74, 20, 70, 22));
-		List rooms = (List) CommandService.getInstance().execute(new RoomServiceCommand(RoomServiceCommand.getAllCommand()));
+		List rooms = (List) CommandService.getInstance().execute(new RoomServiceCommand(RoomServiceCommand.getNotInUseRoomCommand()));
 		this.addRooms(jComboBox1, rooms);
 		jComboBox1.addItem("选择房间");
 		jComboBox1.setSelectedItem("选择房间");
@@ -120,9 +124,20 @@ public class dingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 		jLabel17.setBounds(new Rectangle(387, 122, 53, 25));
 		jTextField1.setBounds(new Rectangle(221, 69, 70, 22));
 		jTextField2.setBounds(new Rectangle(404, 69, 94, 22));
-		jTextField3.setBounds(new Rectangle(75, 124, 70, 22));
-		// jTextField3.addActionListener(new
-		// Frame_jTextField3_actionAdapter(this));
+		dingRoomDate.setBounds(new Rectangle(75, 124, 70, 22));
+		dingRoomDate.setText(DateUtil.getNowAsString());
+		dingRoomDate.setToolTipText("双击选择时间");
+		dingRoomDate.setEnabled(false);
+		dingRoomDate.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					MyDateChooser dateChooser = new MyDateChooser(null,
+							dingRoomDate, "yyyymmddhhttss",
+							"yyyy-MM-dd hh:mm:ss");
+					dateChooser.setVisible(true);
+				}
+			}
+		});
 		jLabel9.setText("账单号");
 		jLabel9.setBounds(new Rectangle(380, 156, 41, 25));
 		jTextField4.setBounds(new Rectangle(429, 158, 70, 22));
@@ -151,7 +166,7 @@ public class dingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 		this.add(jLabel6);
 		this.add(jLabel12);
 		this.add(jTextField1);
-		this.add(jTextField3);
+		this.add(dingRoomDate);
 		this.add(jTextField2);
 		this.add(jComboBox2);
 		this.add(jLabel17);
@@ -168,6 +183,8 @@ public class dingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 
 		jButton1.setActionCommand("true");
 		jButton2.setActionCommand("false");
+		
+		this.setLocationRelativeTo(this);
 		
 		this.setVisible(true);
 	}
@@ -288,7 +305,7 @@ public class dingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 				dingRoom.setUser(this.getUser(txt1, txt2));
 				dingRoom.setRoom(this.selectedRoom);
 				dingRoom.setDiscount(1);
-				dingRoom.setStart(Calendar.getInstance().getTime());
+				dingRoom.setStart(DateUtil.getDate(dingRoomDate.getText().trim()));
 				Map condition = new HashMap();
 				condition.put("entity", dingRoom);
 				CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getSaveOrUpdateCommand(), condition));
@@ -304,7 +321,8 @@ public class dingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 
 		}
 		if (str.equals("false")) {
-			this.setVisible(false);
+			this.dispose();
+			this.parent.refresh();
 		}
 	}
 

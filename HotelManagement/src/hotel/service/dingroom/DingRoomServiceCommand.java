@@ -30,8 +30,21 @@ public class DingRoomServiceCommand extends AbstractServiceCommand {
 			long id = Long.parseLong((String) this.condition.get("id"));
 			DingRoom dingRoom = (DingRoom) executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.id = :id").setParameter("id", id).uniqueResult();
 			executionContext.getSession().delete(dingRoom);
+		} else if (this.command.equals(getFootedDingRoomCommand())) {
+			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null").list();
+		} else if (this.command.equals(getUnfootDingRoomCommand())) {
+			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is null").list();
 		}
 		return null;
+	}
+	
+	
+	public static String getFootedDingRoomCommand() {
+		return "getFootedDingRoomCommand";
+	}
+	
+	public static String getUnfootDingRoomCommand() {
+		return "getUnfootDingRoomCommand";
 	}
 
 }

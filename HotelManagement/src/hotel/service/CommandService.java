@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Stack;
 
 public class CommandService {
 	
@@ -12,10 +13,12 @@ public class CommandService {
 	private static final ThreadLocal context = new ThreadLocal();
 
 	private CommandService() {
+		/*启动和关闭数据库/
+		final String mysqlPath = this.getMysqlPath();
+		//注册关闭数据库的钩子
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
 				try {
-					String mysqlPath = getMysqlPath();
 					String command = "cmd /c " + mysqlPath + "/mysql5/bin/mysqladmin -u root shutdown";
 					Process process = runCommand(command, true);
 					int exitValue = process.waitFor();
@@ -33,15 +36,13 @@ public class CommandService {
 		});
 		//启动数据库
 		try {
-			
-			String mysqlPath = this.getMysqlPath();
-			
 			String command = "cmd /c " + mysqlPath + "/mysql5/bin/mysqld";
 			Process process = runCommand(command, false);
 			process.destroy();
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
+		//*/
 	}
 	
 	private String getMysqlPath() {
@@ -114,11 +115,23 @@ public class CommandService {
 	}
 	
 	public CommandService open() {
-		ExecutionContext executionContext = new ExecutionContext();
-		context.set(executionContext);
+//		ExecutionContext executionContext = getCurrentExecutionContext();
+//		if (executionContext == null) {
+			ExecutionContext executionContext = new ExecutionContext();
+			pushExecutionContext(executionContext);
+//		}
 		return instance;
 	}
 	
+	private void pushExecutionContext(ExecutionContext executionContext) {
+		Stack stack = (Stack) context.get();
+		if (stack == null) {
+			stack = new Stack();
+			context.set(stack);
+		}
+		stack.push(executionContext);
+	}
+
 	public Object execute(Command command) {
 		open();
 		try {
@@ -132,13 +145,26 @@ public class CommandService {
 	}
 	
 	public void close() {
-		ExecutionContext executionContext = getCurrentExecutionContext();
-		executionContext.close();
-		context.remove();
+		ExecutionContext executionContext = popCurrentExecutionContext();
+		if (((Stack) context.get()).size() == 0) {
+			executionContext.close();
+		}
 	}
 	
+	private ExecutionContext popCurrentExecutionContext() {
+		Stack stack = (Stack) context.get();
+		if (stack == null) {
+			return null;
+		}
+		return (ExecutionContext) stack.pop();
+	}
+
 	public static ExecutionContext getCurrentExecutionContext() {
-		return (ExecutionContext) context.get();
+		Stack stack = (Stack) context.get();
+		if (stack == null) {
+			return null;
+		}
+		return (ExecutionContext) stack.peek();
 	}
 	
 	public Object assignId(Object obj) {

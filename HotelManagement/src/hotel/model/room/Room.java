@@ -94,4 +94,9 @@ public class Room extends BaseModel {
 		return fieldMapLabel;
 	}
 
+	@Override
+	public String toString() {
+		return this.getRoomNum();
+	}
+
 }

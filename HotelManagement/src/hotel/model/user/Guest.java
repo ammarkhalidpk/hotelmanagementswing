@@ -90,4 +90,9 @@ public class Guest extends User {
 		this.point = point;
 	}
 
+	@Override
+	public String toString() {
+		return this.getIdentifier() + "(" + this.getName() + ")";
+	}
+
 }
