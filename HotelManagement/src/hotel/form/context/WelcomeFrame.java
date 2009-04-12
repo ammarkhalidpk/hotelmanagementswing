@@ -2,6 +2,7 @@ package hotel.form.context;
 
 import hotel.form.main.MainFrame;
 import hotel.util.MessageUtil;
+import hotel.util.ResourceReader;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -31,8 +32,8 @@ public class WelcomeFrame extends BasePanel {
 		imgLabel.setBounds(0,0,this.parent.getWidth(), this.parent.getHeight());
 		// 将contentPane设置成透明的
 		this.setOpaque(false); */
-		
-		JImagePane panel = new JImagePane(new ImageIcon("./resources/welcome.JPG").getImage(), JImagePane.SCALED);
+		Image image = ResourceReader.getImageFromJar("resources/welcome.JPG", WelcomeFrame.class);
+		JImagePane panel = new JImagePane(image/*new ImageIcon("./resources/welcome.JPG").getImage()*/, JImagePane.SCALED);
 		//或者
 //		JImagePane panel = new JImagePane();
 //		panel.setBackgroundImage(new ImageIcon("003.png");

@@ -10,7 +10,8 @@ public class MessageUtil {
 
 	static {
 		messages = new Properties();
-		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("./messages_zh_CN.properties");
+		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("messages_zh_CN.properties");
+		//InputStream is = MessageUtil.class.getClassLoader().getResourceAsStream("messages_zh_CN.properties");
 		try {
 			messages.load(is);
 		} catch (IOException e) {

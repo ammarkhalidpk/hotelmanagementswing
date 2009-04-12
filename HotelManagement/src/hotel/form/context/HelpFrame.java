@@ -3,10 +3,12 @@
 package hotel.form.context;
 
 import hotel.form.main.MainFrame;
+import hotel.util.ResourceReader;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Rectangle;
 
 import javax.swing.BoxLayout;
@@ -48,15 +50,20 @@ public class HelpFrame extends BasePanel {
 		this.parent.setTitle("°ïÖú");
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-		JImagePane panel = new JImagePane(new ImageIcon("./resources/welcome.JPG").getImage(), JImagePane.SCALED);
+		Image image = ResourceReader.getImageFromJar("resources/welcome.JPG", this.getClass());
+		JImagePane panel = new JImagePane(image/*new ImageIcon("./resources/welcome.JPG").getImage()*/, JImagePane.SCALED);
 		p.add(panel);
-		panel = new JImagePane(new ImageIcon("./resources/room_01_big.jpg").getImage(), JImagePane.SCALED);
+		image = ResourceReader.getImageFromJar("resources/room_01_big.jpg", this.getClass());
+		panel = new JImagePane(image/*new ImageIcon("./resources/room_01_big.jpg").getImage()*/, JImagePane.SCALED);
 		p.add(panel);
-		panel = new JImagePane(new ImageIcon("./resources/room_02_big.jpg").getImage(), JImagePane.SCALED);
+		image = ResourceReader.getImageFromJar("resources/room_02_big.jpg", this.getClass());
+		panel = new JImagePane(image/*new ImageIcon("./resources/room_02_big.jpg").getImage()*/, JImagePane.SCALED);
 		p.add(panel);
-		panel = new JImagePane(new ImageIcon("./resources/room_04_big.jpg").getImage(), JImagePane.SCALED);
+		image = ResourceReader.getImageFromJar("resources/room_04_big.jpg", this.getClass());
+		panel = new JImagePane(image/*new ImageIcon("./resources/room_04_big.jpg").getImage()*/, JImagePane.SCALED);
 		p.add(panel);
-		panel = new JImagePane(new ImageIcon("./resources/room_05_big.jpg").getImage(), JImagePane.SCALED);
+		image = ResourceReader.getImageFromJar("resources/room_05_big.jpg", this.getClass());
+		panel = new JImagePane(image/*new ImageIcon("./resources/room_05_big.jpg").getImage()*/, JImagePane.SCALED);
 		p.add(panel);
 		JScrollPane jsp = new JScrollPane(p, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.add(jsp, BorderLayout.CENTER);
