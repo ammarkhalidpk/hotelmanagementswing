@@ -3,15 +3,20 @@ package hotel.form.context;
 import hotel.form.main.MainFrame;
 import hotel.service.CommandService;
 import hotel.service.dingroom.DingRoomServiceCommand;
+import hotel.service.room.RoomServiceCommand;
+import hotel.util.DateUtil;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -24,14 +29,12 @@ public class DingRoom extends BasePanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public JButton btnInsert, btnDelete, btnUpdate, btnSelect, btnSelect1,
-			btnSelect2;
+	public JButton btnInsert, btnDelete, btnUpdate, allDingRoomInfo, inUse, btnSelect2;
 	public JComboBox jComboBox1, jComboBox2, jComboBox3, jComboBox4,
 			jComboBox5, jComboBox6;
 	public JTextField jTextField1, jTextField2, jTextField3;
 	public JTextArea jTextArea1;
 	public JTable tabShow;
-	public Connection con;
 
 	public DingRoom(MainFrame parent) {
 		super(parent);
@@ -53,25 +56,25 @@ public class DingRoom extends BasePanel {
 			super(new FlowLayout());
 			btnInsert = new JButton("开房");
 			btnDelete = new JButton("退房");
-			btnSelect = new JButton("查询所有房");
-			btnSelect1 = new JButton("正使用房");
-			btnSelect2 = new JButton("空闲房");
+			allDingRoomInfo = new JButton("查询所有订房信息");
+			inUse = new JButton("使用房间");
+			btnSelect2 = new JButton("已退房间");
 
 			this.add(btnInsert);
 			this.add(btnDelete);
-			this.add(btnSelect);
-			this.add(btnSelect1);
+			this.add(allDingRoomInfo);
+			this.add(inUse);
 			this.add(btnSelect2);
 
-			btnSelect.addActionListener(this);
+			allDingRoomInfo.addActionListener(this);
 			btnInsert.addActionListener(this);
-			btnSelect1.addActionListener(this);
+			inUse.addActionListener(this);
 			btnSelect2.addActionListener(this);
 			btnDelete.addActionListener(this);
 
-			btnSelect.setActionCommand("select");
+			allDingRoomInfo.setActionCommand("select");
 			btnInsert.setActionCommand("insert");
-			btnSelect1.setActionCommand("select1");
+			inUse.setActionCommand("select1");
 			btnSelect2.setActionCommand("select2");
 			btnDelete.setActionCommand("delete");
 		}
@@ -84,25 +87,40 @@ public class DingRoom extends BasePanel {
 			if (str.equals("insert")) {
 				new dingRoomFrame1(DingRoom.this);
 			}
-			/*if (str.equals("select1")) {
-				DefaultTableModel dtm = new DefaultTableModel(dbo
-						.getDataByTabname1(), dbo.getColumnNamesByTabname1());
-				tabShow.setModel(dtm);
+			if (str.equals("select1")) {
+				//inUse
+				DefaultTableModel dingRoom = new DefaultTableModel((Object[][]) CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getUnfootDingRoomAsArrayCommand())), hotel.model.dingroom.DingRoom.getFieldMapLabel().values().toArray());
+				tabShow.setModel(dingRoom);
 			}
 			if (str.equals("select2")) {
-				DefaultTableModel dtm = new DefaultTableModel(dbo
-						.getDataByTabname2(), dbo.getColumnNamesByTabname2());
-				tabShow.setModel(dtm);
+				//已退房间
+				DefaultTableModel dingRoom = new DefaultTableModel((Object[][]) CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getFootedDingRoomAsArrayCommand())), hotel.model.dingroom.DingRoom.getFieldMapLabel().values().toArray());
+				tabShow.setModel(dingRoom);
 			}
-			
-			 * if(str.equals("update")){ new dingRoomFrameUpdate(); }
-			 
 			if (str.equals("delete")) {
-				new dingRoomFrameDelete();
+				int selectedRowIndex = tabShow.getSelectedRow();
+				if (selectedRowIndex != -1) {
+					//首先根据id得到DingRoom实体
+					String id = (String) tabShow.getModel().getValueAt(selectedRowIndex, 0);
+					Map condition = new HashMap();
+					condition.put("id", id);
+					hotel.model.dingroom.DingRoom dingRoom = (hotel.model.dingroom.DingRoom) CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getByIdCommand(), condition));
+					if (dingRoom.getEnd() != null) {
+						JOptionPane.showMessageDialog(DingRoom.this, "请选择房间正在使用的房间", "错误提示", JOptionPane.ERROR_MESSAGE);
+					} else {
+						String roomNum = (String) tabShow.getModel().getValueAt(selectedRowIndex, 2);
+						if (JOptionPane.showConfirmDialog(DingRoom.this, "确定要退房间号为：" + roomNum + "的房间吗？") == JOptionPane.OK_OPTION) {
+							dingRoom.setEnd(DateUtil.getNow());
+							dingRoom.setDescription("未结算");
+							condition.put("entity", dingRoom);
+							CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getSaveOrUpdateCommand(), condition));
+							refresh();
+						}
+					}
+				} else {
+					JOptionPane.showMessageDialog(DingRoom.this, "请选择房间", "错误提示", JOptionPane.ERROR_MESSAGE);
+				}
 			}
-			if (str.equals("exit")) {
-				this.setVisible(false);
-			}*/
 		}
 	}
 

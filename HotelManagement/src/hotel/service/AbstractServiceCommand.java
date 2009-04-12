@@ -93,6 +93,10 @@ public abstract class AbstractServiceCommand implements Command {
 		}
 	}
 	
+	public static String getByIdCommand() {
+		return "getByIdCommand";
+	}
+	
 	public static String getAllAsArrayCommand() {
 		return GETALLASARRAYCOMMAND;
 	}

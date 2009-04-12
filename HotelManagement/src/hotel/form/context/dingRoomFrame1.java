@@ -311,7 +311,6 @@ public class dingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 				CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getSaveOrUpdateCommand(), condition));
 				JOptionPane.showMessageDialog(this, "登记成功！", "成功",
 						JOptionPane.INFORMATION_MESSAGE);
-				// sta.close();
 			} catch (Exception sqle) {
 				sqle.printStackTrace();
 				JOptionPane.showMessageDialog(this, "写入数据失败！", "失败",
