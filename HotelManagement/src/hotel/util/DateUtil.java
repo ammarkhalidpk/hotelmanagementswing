@@ -111,8 +111,15 @@ public class DateUtil {
 		} else {
 			ss = 0;
 		}
-		
-		return new Date(yyyy, MM, dd, hh, mm, ss);
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, yyyy);
+		cal.set(Calendar.MONTH, MM - 1);
+		cal.set(Calendar.DAY_OF_MONTH, dd);
+		cal.set(Calendar.HOUR, hh);
+		cal.set(Calendar.MINUTE, mm);
+		cal.set(Calendar.SECOND, ss);
+		return cal.getTime();
+		//return new Date(yyyy, MM, dd, hh, mm, ss);
 	}
 
 	private static void putInMap(String token, Map map) {
