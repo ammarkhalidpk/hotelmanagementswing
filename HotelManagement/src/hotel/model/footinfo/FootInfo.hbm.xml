@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-access="field">
+
+  <class name="hotel.model.footinfo.FootInfo" 
+         table="HOTEL_FOOTINFO"
+         discriminator-value="A">
+    <id name="id" column="ID_"><generator class="native" /></id>
+    <discriminator type="char" column="CLASS_"/>
+
+    <property name="paied"     	  column="PAIED_" />
+    <property name="description"  column="DESCRIPTION_" length="4000" />
+
+	<many-to-one name="dingRoom"
+                 column="DINGROOM_"
+                 foreign-key="FK_FOOTINFO_DINGROOM"
+                 index="IDX_FOOTINFO_DINGROOM"/>
+
+  </class>
+
+</hibernate-mapping>

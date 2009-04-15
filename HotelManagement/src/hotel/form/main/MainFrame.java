@@ -84,7 +84,7 @@ public class MainFrame extends JFrame {
 		this.setSize((int)screenSize.getWidth(), ((int)screenSize.getHeight() - 30));
 		// this.setResizable(false);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
-		//this.setLocationRelativeTo(this);// ������ʾ
+		//this.setLocationRelativeTo(this);// 居中显示������ʾ
 		this.setLocation(0, 0);
 		this.setVisible(true);
 	}
@@ -116,23 +116,23 @@ public class MainFrame extends JFrame {
 				
 			this.registerFunction("user", "MainFrame.user.manage", UserFrame.class);
 			
-			//ͳ�Ʋ�ѯ
+			//统计查询
 			this.registerFunction("statistics", "MainFrame.btnStatistics", Statistics.class);
-			//�Ӵ����
+			//接待管理����
 			this.registerFunction("btnReceive", "MainFrame.btnReceive", Receive.class);
-			//�۷�����
+			//�售房工具�����
 			this.registerFunction("btnSell", "MainFrame.btnSell", RoomSell.class);
-			//���ܲ���
+			//万能查找���ܲ���
 			this.registerFunction("btnQuery", "MainFrame.btnQuery", AllQuery.class);
-			//�͵�����
+			//客单查找�����
 			this.registerFunction("btnFormQuery", "MainFrame.btnFormQuery", FormQuery.class);
-			//�������
+			//收银管理�������
 			this.registerFunction("btnCashier", "MainFrame.btnCashier", Cashier.class);
-			//ǰ̨��˹���
+			//前台查核管理��˹���
 			this.registerFunction("btnFrontDeskCheck", "MainFrame.btnFrontDeskCheck", FrontDeskCheck.class);
-			//�ͻ���ʷ��Լ����
+			//客户历史合约管理�ͻ���ʷ��Լ����
 			this.registerFunction("btnHistoryTreaty", "MainFrame.btnHistoryTreaty", HistoryTreaty.class);
-			//VIP��ɹ���
+			//VIP生成功能
 			this.registerFunction("btnVIPGenerate", "MainFrame.btnVIPGenerate", VIPGenerate.class);
 
 			this.registerFunction("help", "MainFrame.help", HelpFrame.class);

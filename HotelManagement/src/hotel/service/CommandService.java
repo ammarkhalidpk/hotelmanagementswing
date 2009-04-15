@@ -133,6 +133,10 @@ public class CommandService {
 	}
 
 	public Object execute(Command command) {
+		return execute(command, true);
+	}
+	
+	public Object execute(Command command, boolean autoCommit) {
 		open();
 		try {
 			return command.execute(getCurrentExecutionContext());
@@ -140,7 +144,9 @@ public class CommandService {
 			getCurrentExecutionContext().setRollbackOnly();
 			throw new RuntimeException(e);
 		} finally {
-			close();
+			if (autoCommit) {
+				close();	
+			}
 		}
 	}
 	

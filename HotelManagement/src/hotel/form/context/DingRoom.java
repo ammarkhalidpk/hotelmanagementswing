@@ -86,13 +86,13 @@ public class DingRoom extends BasePanel {
 				new dingRoomFrame1(DingRoom.this);
 			}
 			if (str.equals("select1")) {
-				//inUse
-				DefaultTableModel dingRoom = new DefaultTableModel((Object[][]) CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getUnfootDingRoomAsArrayCommand())), hotel.model.dingroom.DingRoom.getFieldMapLabel().values().toArray());
+				//inUse,未退房间
+				DefaultTableModel dingRoom = new DefaultTableModel((Object[][]) CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getUnCheckOutDingRoomAsArrayCommand())), hotel.model.dingroom.DingRoom.getFieldMapLabel().values().toArray());
 				tabShow.setModel(dingRoom);
 			}
 			if (str.equals("select2")) {
 				//已退房间
-				DefaultTableModel dingRoom = new DefaultTableModel((Object[][]) CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getFootedDingRoomAsArrayCommand())), hotel.model.dingroom.DingRoom.getFieldMapLabel().values().toArray());
+				DefaultTableModel dingRoom = new DefaultTableModel((Object[][]) CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getCheckOutDingRoomAsArrayCommand())), hotel.model.dingroom.DingRoom.getFieldMapLabel().values().toArray());
 				tabShow.setModel(dingRoom);
 			}
 			if (str.equals("delete")) {
@@ -109,7 +109,7 @@ public class DingRoom extends BasePanel {
 						String roomNum = (String) tabShow.getModel().getValueAt(selectedRowIndex, 2);
 						if (JOptionPane.showConfirmDialog(DingRoom.this, "确定要退房间号为：" + roomNum + "的房间吗？") == JOptionPane.OK_OPTION) {
 							dingRoom.setEnd(DateUtil.getNow());
-							dingRoom.setDescription("未结算");
+							dingRoom.setFootState("未结算");
 							condition.put("entity", dingRoom);
 							CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getSaveOrUpdateCommand(), condition));
 							refresh();

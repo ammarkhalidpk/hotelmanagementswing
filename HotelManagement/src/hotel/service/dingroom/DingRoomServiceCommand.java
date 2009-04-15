@@ -38,15 +38,22 @@ public class DingRoomServiceCommand extends AbstractServiceCommand {
 			DingRoom dingRoom = (DingRoom) executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.id = :id").setParameter("id", id).uniqueResult();
 			executionContext.getSession().delete(dingRoom);
 		} else if (this.command.equals(getFootedDingRoomCommand())) {
-			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null").list();
+			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null and dingRoom.footState = :footState").setParameter("footState", "已结算").list();
 		} else if (this.command.equals(getUnfootDingRoomCommand())) {
-			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is null").list();
+			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null and dingRoom.footState = :footState").setParameter("footState", "未结算").list();
 		} else if (this.command.equals(getUnfootDingRoomAsArrayCommand())) {
-			List result = executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is null").list();
+			List result = executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null and dingRoom.footState = :footState").setParameter("footState", "未结算").list();
 			return this.toArray(result);
 		} else if (this.command.equals(getFootedDingRoomAsArrayCommand())) {
-			List result = executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null").list();
+			List result = executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null and dingRoom.footState = :footState").setParameter("footState", "已结算").list();
 			return this.toArray(result);
+		} else if (this.command.equals(getUnCheckOutDingRoomAsArrayCommand())) {
+			return this.toArray(executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is null").list());
+		} else if (this.command.equals(getCheckOutDingRoomAsArrayCommand())) {
+			return this.toArray(executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null and dingRoom.footState = :footState").setParameter("footState", "未结算").list());
+		} else if (this.command.equals(getUnfootDingRoomByRoomNumCommand())) {
+			String roomNum = (String) this.condition.get("roomNum");
+			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null and dingRoom.footState = :footState and dingRoom.room.roomNum = :roomNum").setParameter("roomNum", roomNum).setParameter("footState", "未结算").list();
 		}
 		return null;
 	}
@@ -70,6 +77,18 @@ public class DingRoomServiceCommand extends AbstractServiceCommand {
 
 	public static String getUpdateCommand() {
 		return "getUpdateCommand";
+	}
+
+	public static String getUnCheckOutDingRoomAsArrayCommand() {
+		return "getUnCheckOutDingRoomAsArrayCommand";
+	}
+
+	public static String getCheckOutDingRoomAsArrayCommand() {
+		return "getCheckOutDingRoomAsArrayCommand";
+	}
+
+	public static String getUnfootDingRoomByRoomNumCommand() {
+		return "getUnfootDingRoomByRoomNumCommand";
 	}
 
 }

@@ -1,10 +1,13 @@
 package hotel.model.dingroom;
 
 import hotel.model.BaseModel;
+import hotel.model.footinfo.FootInfo;
 import hotel.model.room.Room;
 import hotel.model.user.User;
+import hotel.service.CommandService;
 import hotel.util.MessageUtil;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -22,6 +25,7 @@ public class DingRoom extends BaseModel {
 		fieldMapLabel.put("start", MessageUtil.getMessage("DingRoom.start"));
 		fieldMapLabel.put("end", MessageUtil.getMessage("DingRoom.end"));
 		fieldMapLabel.put("discount", MessageUtil.getMessage("DingRoom.discount"));
+		fieldMapLabel.put("footState", MessageUtil.getMessage("DingRoom.footState"));
 		fieldMapLabel.put("description", MessageUtil.getMessage("DingRoom.description"));
 	}
 
@@ -51,6 +55,10 @@ public class DingRoom extends BaseModel {
 	 */
 	private float discount;
 	/**
+	 * 是否结算
+	 */
+	private String footState = "";
+	/**
 	 * 备注
 	 */
 	private String description;
@@ -62,7 +70,17 @@ public class DingRoom extends BaseModel {
 	public String getAttLabel(String attName) {
 		return (String) fieldMapLabel.get(attName);
 	}
-
+	
+	public FootInfo createFootInfo() {
+		FootInfo footInfo = new FootInfo(this);
+		long t = this.end.getTime() - this.start.getTime();
+		int days = (int) (t/60/60/1000/24);
+		float paied = this.room.getPrise() * days * this.discount;
+		footInfo.setPaied(paied);
+		CommandService.getInstance().assignId(footInfo);
+		return footInfo;
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -117,6 +135,14 @@ public class DingRoom extends BaseModel {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getFootState() {
+		return footState;
+	}
+
+	public void setFootState(String footState) {
+		this.footState = footState;
 	}
 
 }

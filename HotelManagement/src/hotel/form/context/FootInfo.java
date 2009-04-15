@@ -1,6 +1,13 @@
 package hotel.form.context;
 
 import hotel.form.main.MainFrame;
+import hotel.hibernate.HibernateProxyUtil;
+import hotel.model.dingroom.DingRoom;
+import hotel.model.user.Guest;
+import hotel.model.user.User;
+import hotel.model.user.VIPUser;
+import hotel.service.CommandService;
+import hotel.service.dingroom.DingRoomServiceCommand;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -8,20 +15,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -36,7 +40,7 @@ public class FootInfo extends BasePanel implements ActionListener, ItemListener 
 	// String[] strfj={"101","102","103","201","202","203","301","302","303"};
 	public JButton jButton1, jButton2;
 	public JTextField jTextField1 = new JTextField();
-	public JComboBox jComboBox1 = new JComboBox(/*dbo.getAllTabelName2()*/);
+	public JComboBox waitForFoot = new JComboBox();
 	public JComboBox jComboBox2 = new JComboBox(strtf);
 
 	public JLabel jLabel3 = new JLabel();
@@ -45,13 +49,15 @@ public class FootInfo extends BasePanel implements ActionListener, ItemListener 
 	public JLabel jLabel9 = new JLabel();
 	public JLabel jLabel11 = new JLabel();
 	public JLabel jLabel13 = new JLabel();
-	public JComboBox jTextArea1 = new JComboBox(/*dbo.getAllTabelName3()*/); // 改为帐单号
+	public JComboBox jTextArea1 = new JComboBox(); 
 	public JLabel jLabel14 = new JLabel();
 
 	public static float jg, zk, rztime, tftime;
 	public static float addname;
 	public static String strbox1, strtxt1;
 	public static String str; // 静态流水号
+	
+	private hotel.model.dingroom.DingRoom selectedDingRoom;
 
 	public FootInfo(MainFrame parent) {
 		super(parent);
@@ -76,9 +82,8 @@ public class FootInfo extends BasePanel implements ActionListener, ItemListener 
 		setSize(new Dimension(471, 300));
 		jLabel1.setText("客房编号");
 		jLabel1.setBounds(new Rectangle(18, 35, 57, 25));
-		jComboBox1.setBounds(new Rectangle(75, 35, 80, 26));
-		jComboBox1.addItem("选择房号");
-		jComboBox1.setSelectedItem("选择房号");
+		waitForFoot.setBounds(new Rectangle(75, 35, 80, 26));
+		this.initWaitForFoot(waitForFoot);
 		jLabel2.setText("客房种类");
 		jLabel2.setBounds(new Rectangle(165, 35, 60, 23));
 		jLabel3.setBorder(BorderFactory.createLoweredBevelBorder());
@@ -113,14 +118,11 @@ public class FootInfo extends BasePanel implements ActionListener, ItemListener 
 		jComboBox2.setBounds(new Rectangle(225, 212, 71, 26));
 		jLabel16.setText("帐单号");
 		jLabel16.setBounds(new Rectangle(306, 212, 60, 23));
-		jTextArea1.setBounds(new Rectangle(367, 212, 70, 26));
-		jTextArea1.addItem("选择账单");
-		jTextArea1.setSelectedItem("选择账单");
 		jButton1.setBounds(new Rectangle(18, 212, 60, 23));
 		jButton1.setText("结算");
 		jButton2.setBounds(new Rectangle(89, 212, 60, 23));
 		jButton2.setText("取消");
-		this.add(jComboBox1);
+		this.add(waitForFoot);
 		this.add(jLabel7);
 		this.add(jLabel12);
 		this.add(jLabel13);
@@ -136,103 +138,95 @@ public class FootInfo extends BasePanel implements ActionListener, ItemListener 
 		this.add(jLabel9);
 		this.add(jLabel4);
 		this.add(jLabel14);
-		this.add(jLabel16);
-		this.add(jComboBox2);
-		this.add(jButton2);
-		this.add(jLabel15);
+		//this.add(jLabel16);
+		//this.add(jComboBox2);
+		//this.add(jButton2);
+		//this.add(jLabel15);
 		this.add(jButton1);
-		this.add(jTextArea1);
 
 		jButton1.addActionListener(this);
 		jButton2.addActionListener(this);
 
-		jComboBox1.addItemListener(this);
-		jTextArea1.addItemListener(new add());
+		waitForFoot.addItemListener(this);
 
 		jButton1.setActionCommand("true");
 		jButton2.setActionCommand("false");
 
 		this.parent.setTitle("结帐窗口");
-		this.setVisible(true);
+		//this.setVisible(true);
+	}
+
+	private void initWaitForFoot(JComboBox waitForFoot) {
+		waitForFoot.removeAllItems();
+		List<?> unFootDingRoom = (List<?>) CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getUnfootDingRoomCommand()), false);
+		for (Iterator iter = unFootDingRoom.iterator(); iter.hasNext(); ) {
+			hotel.model.dingroom.DingRoom dingRoom = (hotel.model.dingroom.DingRoom) iter.next();
+			waitForFoot.addItem(dingRoom.getRoom().getRoomNum());
+		}
+		CommandService.getInstance().close();
+		waitForFoot.addItem("选择房号");
+		waitForFoot.setSelectedItem("选择房号");
 	}
 
 	public void itemStateChanged(ItemEvent ie) {
-		jComboBox1.removeItem("选择房号");
-		String str = (String) ((Vector) jComboBox1.getSelectedItem()).get(0);
+		//waitForFoot.removeItem("选择房号");
+		String str = (String) waitForFoot.getSelectedItem();
 		try {
-			String strsql = "select * from footinfo where 客房编号 =";
-			String[][] result = null;//DBTools.executeQueryWithTableHead(strsql + str);
-			System.out.println(strsql + str);
-
-			jLabel3.setText(result[1][2]); // 房种类
-			jLabel5.setText(result[1][4]); // 房单价
-			jLabel13.setText(result[1][5]); // 折扣
-
-		} catch (Exception sql) {
-			sql.printStackTrace();
+			if (str != null && !str.equals("选择房号")) {
+				Map condition = new HashMap();
+				condition.put("roomNum", str);
+				selectedDingRoom = (DingRoom) ((List)CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getUnfootDingRoomByRoomNumCommand(), condition), false)).get(0);
+				jLabel3.setText(selectedDingRoom.getRoom().getType()); // 房种类
+				jLabel5.setText(selectedDingRoom.getRoom().getPrise() + ""); // 房单价
+				jLabel13.setText(selectedDingRoom.getDiscount() + ""); // 折扣
+				jLabel7.setText(selectedDingRoom.getUser().getName()); // 姓名
+				User user = selectedDingRoom.getUser();
+				user = (User) HibernateProxyUtil.getImplementation(user);
+				String identifier = null;
+				if (user instanceof Guest) {
+					identifier = ((Guest)user).getIdentifier();
+				} else if (user instanceof VIPUser) {
+					identifier = ((VIPUser)user).getIdentifier();
+				}
+				jLabel9.setText(identifier); // 身份证
+				jLabel11.setText(selectedDingRoom.getStart() + ""); // 入住时间
+				jTextField1.setText(selectedDingRoom.getEnd() + "");
+				jTextField1.setEditable(false);
+				CommandService.getInstance().close();
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 
-	public void add() {
-		jg = java.lang.Float.parseFloat(jLabel5.getText());
-		rztime = java.lang.Float.parseFloat(jLabel11.getText());
-		zk = java.lang.Float.parseFloat(jLabel13.getText());
-		tftime = java.lang.Float.parseFloat(jTextField1.getText());
-
-		addname = (tftime - rztime) * jg * zk;
-
-		strbox1 = (String) jComboBox2.getSelectedItem();
-		strtxt1 = jTextField1.getText();
-
-		System.out.println(jg);
-		System.out.println(rztime);
-		System.out.println(zk);
-		System.out.println(tftime);
+	public void foot(DingRoom selectedDingRoom) {
+		hotel.model.footinfo.FootInfo footInfo = selectedDingRoom.createFootInfo();
+		selectedDingRoom.setFootState("已结算");
+		Map condition = new HashMap();
+		condition.put("entity", selectedDingRoom);
+		CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getSaveOrUpdateCommand(), condition));
+		waitForFoot.removeItem(selectedDingRoom.getRoom().getRoomNum());
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		String str = e.getActionCommand();
-		if (str.equals("false")) {
-			this.setVisible(false);
-		}
-		if (str.equals("true")) {
-			String a = jTextField1.getText();
-			if (a.equals("")) {
-				JOptionPane.showMessageDialog(this, "请您填写退房时间！", "提示",
-						JOptionPane.ERROR_MESSAGE);
-
+		String command = e.getActionCommand();
+		if (command.equals("true")) {
+			if (selectedDingRoom != null) {
+				foot(selectedDingRoom);
+				selectedDingRoom = null;
 			} else {
-
-				jComboBox2.enable(true);
-				add();
-				//new jiesuan();
+				String str = (String) waitForFoot.getSelectedItem();
+				if (str != null && !str.equals("选择房号")) {
+					Map condition = new HashMap();
+					condition.put("roomNum", str);
+					selectedDingRoom = (DingRoom) ((List)CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getUnfootDingRoomByRoomNumCommand(), condition), false)).get(0);
+					foot(selectedDingRoom);
+					selectedDingRoom = null;
+				}
 			}
 		}
 	}
 
-	class add implements ItemListener {
-
-		public void itemStateChanged(ItemEvent ie) {
-			jTextArea1.removeItem("选择账单");
-			try {
-				str = (String) ((Vector) jTextArea1.getSelectedItem()).get(0);
-
-				System.out.println("第到的元素是：" + str);
-
-				String strsql = "select * from dingfangxinxi where 账单流水号 =";
-				String[][] result = null;//DBTools.executeQueryWithTableHead(strsql + str + " and 使用状态 = '正常'");
-
-				jLabel7.setText(result[1][6]); // 姓名
-				jLabel9.setText(result[1][7]); // 身份证
-				jLabel11.setText(result[1][8]); // 入住时间
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				System.out.println("下面的事件出错了！");
-			}
-		}
-	}
-	
 	public void access(MainFrame vistor) {
 		vistor.visit(this);
 	}
