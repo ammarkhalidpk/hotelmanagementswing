@@ -118,6 +118,8 @@ public class MainFrame extends JFrame {
 			
 			//统计查询
 			this.registerFunction("statistics", "MainFrame.btnStatistics", Statistics.class);
+			
+			
 			//接待管理����
 			this.registerFunction("btnReceive", "MainFrame.btnReceive", Receive.class);
 			//�售房工具�����

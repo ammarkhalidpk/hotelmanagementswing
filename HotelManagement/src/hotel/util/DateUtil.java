@@ -119,7 +119,6 @@ public class DateUtil {
 		cal.set(Calendar.MINUTE, mm);
 		cal.set(Calendar.SECOND, ss);
 		return cal.getTime();
-		//return new Date(yyyy, MM, dd, hh, mm, ss);
 	}
 
 	private static void putInMap(String token, Map map) {

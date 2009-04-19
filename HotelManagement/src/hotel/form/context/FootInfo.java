@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -113,6 +112,7 @@ public class FootInfo extends BasePanel implements ActionListener, ItemListener 
 		jLabel14.setText("退房时间");
 		jLabel14.setBounds(new Rectangle(306, 147, 60, 23));
 		jTextField1.setBounds(new Rectangle(367, 147, 79, 26));
+		jTextField1.setEditable(false);
 		jLabel15.setText("是否入住");
 		jLabel15.setBounds(new Rectangle(165, 212, 60, 23));
 		jComboBox2.setBounds(new Rectangle(225, 212, 71, 26));
