@@ -125,8 +125,8 @@ public class UseraddFrame extends JDialog implements ActionListener {
 				user.setPassword(pwd1);
 				user.setDescription("");
 				Map condition = new HashMap();
-				condition.put("user", user);
-				CommandService.getInstance().execute(new UserServiceCommand("saveOrUpdateUser", condition));
+				condition.put("entry", user);
+				CommandService.getInstance().execute(new UserServiceCommand(UserServiceCommand.getSaveOrUpdateEntryCommand(), condition));
 				JOptionPane.showMessageDialog(this, "登记成功！", "成功",
 							JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception ea) {

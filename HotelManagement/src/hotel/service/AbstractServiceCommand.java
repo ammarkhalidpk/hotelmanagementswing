@@ -12,18 +12,6 @@ import java.util.Map;
 
 public abstract class AbstractServiceCommand implements Command {
 	
-	private static final String SAVE = "save";
-	
-	private static final String DELETE = "delete";
-	
-	private static final String UPDATE = "update";
-	
-	private static final String QUERY = "query";
-	
-	private static final String GETALLASARRAYCOMMAND = "getAllAsArray";
-	
-	private static final String SAVEORUPDATEUSER = "saveOrUpdate";
-
 	protected String command;
 	
 	protected Map condition;
@@ -98,15 +86,15 @@ public abstract class AbstractServiceCommand implements Command {
 	}
 	
 	public static String getAllAsArrayCommand() {
-		return GETALLASARRAYCOMMAND;
+		return "getAllAsArrayCommand";
 	}
 	
-	public static String getSaveOrUpdateCommand() {
-		return SAVEORUPDATEUSER;
+	public static String getSaveOrUpdateEntryCommand() {
+		return "getSaveOrUpdateEntryCommand";
 	}
 	
-	public static String getDeleteCommand() {
-		return DELETE;
+	public static String getDeleteByIdCommand() {
+		return "getDeleteByIdCommand";
 	}
 	
 	public static String getAllCommand() {

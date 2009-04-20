@@ -11,9 +11,13 @@ import javax.swing.SwingConstants;
 import hotel.form.main.MainFrame;
 
 public class VIPGenerate extends BasePanel {
+	
+	private MainFrame parent;
 
 	public VIPGenerate(MainFrame parent) {
 		super(parent);
+		this.parent = parent;
+		this.parent.setTitle("VIP管理");
 		this.setLayout(new BorderLayout());
 		JLabel lab, lab1;
 		lab = new JLabel("欢迎使用本系统");
@@ -31,7 +35,7 @@ public class VIPGenerate extends BasePanel {
 		this.add(lab, BorderLayout.NORTH);
 		this.add(lab1, BorderLayout.NORTH);
 	}
-
+	
 	/**
 	 * 
 	 */

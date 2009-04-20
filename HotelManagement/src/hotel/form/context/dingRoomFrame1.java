@@ -2,6 +2,7 @@ package hotel.form.context;
 
 import hotel.dbtools.DBTools;
 import hotel.form.main.MainFrame;
+import hotel.hibernate.HibernateProxyUtil;
 import hotel.model.room.Room;
 import hotel.model.user.Guest;
 import hotel.model.user.User;
@@ -308,9 +309,11 @@ public class dingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 				dingRoom.setStart(DateUtil.getDate(dingRoomDate.getText().trim()));
 				Map condition = new HashMap();
 				condition.put("entity", dingRoom);
-				CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getSaveOrUpdateCommand(), condition));
+				CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getSaveOrUpdateEntryCommand(), condition));
 				JOptionPane.showMessageDialog(this, "登记成功！", "成功",
 						JOptionPane.INFORMATION_MESSAGE);
+				this.dispose();
+				this.parent.refresh();
 			} catch (Exception sqle) {
 				sqle.printStackTrace();
 				JOptionPane.showMessageDialog(this, "写入数据失败！", "失败",
@@ -329,12 +332,15 @@ public class dingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 		Map condition = new HashMap();
 		condition.put("idCard", idCard);
 		Object user = CommandService.getInstance().execute(new UserServiceCommand(UserServiceCommand.getUserByIdCard(), condition));
+		user = HibernateProxyUtil.getImplementation(user);
 		if (user != null) {
 			if (user instanceof Guest) {
 				((Guest)user).setPoint(((Guest)user).getPoint() + 1);
 			} else if (user instanceof VIPUser) {
 				((VIPUser)user).setPoint(((VIPUser)user).getPoint() + 1);
 			}
+			condition.put("entry", user);
+			CommandService.getInstance().execute(new UserServiceCommand(UserServiceCommand.getSaveOrUpdateEntryCommand(), condition));
 			return (User) user;
 		} else {
 			Guest guest = new Guest();

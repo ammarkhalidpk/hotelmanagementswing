@@ -204,7 +204,7 @@ public class FootInfo extends BasePanel implements ActionListener, ItemListener 
 		selectedDingRoom.setFootState("“—Ω·À„");
 		Map condition = new HashMap();
 		condition.put("entity", selectedDingRoom);
-		CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getSaveOrUpdateCommand(), condition));
+		CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getSaveOrUpdateEntryCommand(), condition));
 		waitForFoot.removeItem(selectedDingRoom.getRoom().getRoomNum());
 	}
 

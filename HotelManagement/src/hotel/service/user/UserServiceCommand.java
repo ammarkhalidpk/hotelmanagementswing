@@ -20,8 +20,8 @@ public class UserServiceCommand extends AbstractServiceCommand {
 	}
 	
 	public Object execute(ExecutionContext executionContext) {
-		if (this.command.equalsIgnoreCase("saveOrUpdateUser")) {
-			executionContext.getSession().save(this.condition.get("user"));
+		if (this.command.equals(getSaveOrUpdateEntryCommand())) {
+			executionContext.getSession().saveOrUpdate(this.condition.get("entry"));
 		} else if (this.command.equalsIgnoreCase("getUser")) {
 			Query query = executionContext.getSession().createQuery("from hotel.model.user.User user where user.loginName = :logName and user.password = :password");
 			query.setParameter("logName", this.condition.get("logName"));
@@ -30,7 +30,7 @@ public class UserServiceCommand extends AbstractServiceCommand {
 		} else if (this.command.equalsIgnoreCase("getAllAsArray")) {
 			List all =  executionContext.getSession().createQuery("from hotel.model.user.User user").list();
 			return this.toArray(all);
-		} else if (this.command.equalsIgnoreCase("delete")) {
+		} else if (this.command.equals(getDeleteByIdCommand())) {
 			long id = Long.parseLong((String) this.condition.get("id"));
 			User user = (User) executionContext.getSession().createQuery("from hotel.model.user.User user where user.id = :id").setParameter("id", id).uniqueResult();
 			executionContext.getSession().delete(user);

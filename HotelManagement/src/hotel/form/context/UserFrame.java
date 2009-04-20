@@ -95,7 +95,7 @@ public class UserFrame extends BasePanel {
 					if (JOptionPane.showConfirmDialog(UserFrame.this, "确定删除序号为：" + id + "的用户吗？") == JOptionPane.OK_OPTION) {
 						Map condition = new HashMap();
 						condition.put("id", id);
-						CommandService.getInstance().execute(new UserServiceCommand("delete", condition));
+						CommandService.getInstance().execute(new UserServiceCommand(UserServiceCommand.getDeleteByIdCommand(), condition));
 						refresh();
 					}
 				}

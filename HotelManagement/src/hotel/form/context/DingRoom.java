@@ -111,7 +111,7 @@ public class DingRoom extends BasePanel {
 							dingRoom.setEnd(DateUtil.getNow());
 							dingRoom.setFootState("Œ¥Ω·À„");
 							condition.put("entity", dingRoom);
-							CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getSaveOrUpdateCommand(), condition));
+							CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getSaveOrUpdateEntryCommand(), condition));
 							refresh();
 						}
 					}

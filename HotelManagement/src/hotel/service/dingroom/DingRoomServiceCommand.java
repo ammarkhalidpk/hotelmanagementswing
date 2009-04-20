@@ -24,25 +24,25 @@ public class DingRoomServiceCommand extends AbstractServiceCommand {
 			long id = Long.parseLong((String) this.condition.get("id"));
 			DingRoom dingRoom = (DingRoom) executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.id = :id").setParameter("id", id).uniqueResult();
 			return dingRoom;
-		} else if (this.command.equals(this.getAllAsArrayCommand())) {
+		} else if (this.command.equals(getAllAsArrayCommand())) {
 			List all =  executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom").list();
 			return this.toArray(all);
 		} else if (this.command.equals(getUpdateCommand())) {
 			Object entity = this.condition.get("entity");
 			executionContext.getSession().update(entity);
-		} else if (this.command.equals(this.getSaveOrUpdateCommand())) {
+		} else if (this.command.equals(getSaveOrUpdateEntryCommand())) {
 			Object entity = this.condition.get("entity");
 			executionContext.getSession().saveOrUpdate(entity);
-		} else if (this.command.equals(this.getDeleteCommand())) {
+		} else if (this.command.equals(getDeleteByIdCommand())) {
 			long id = Long.parseLong((String) this.condition.get("id"));
 			DingRoom dingRoom = (DingRoom) executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.id = :id").setParameter("id", id).uniqueResult();
 			executionContext.getSession().delete(dingRoom);
 		} else if (this.command.equals(getFootedDingRoomCommand())) {
 			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null and dingRoom.footState = :footState").setParameter("footState", "已结算").list();
 		} else if (this.command.equals(getUnfootDingRoomCommand())) {
-			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null and dingRoom.footState = :footState").setParameter("footState", "未结算").list();
+			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where (dingRoom.end is not null and dingRoom.footState = :footState) or dingRoom.end is null").setParameter("footState", "未结算").list();
 		} else if (this.command.equals(getUnfootDingRoomAsArrayCommand())) {
-			List result = executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null and dingRoom.footState = :footState").setParameter("footState", "未结算").list();
+			List result = executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where (dingRoom.end is not null and dingRoom.footState = :footState) or dingRoom.end is null").setParameter("footState", "未结算").list();
 			return this.toArray(result);
 		} else if (this.command.equals(getFootedDingRoomAsArrayCommand())) {
 			List result = executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null and dingRoom.footState = :footState").setParameter("footState", "已结算").list();
