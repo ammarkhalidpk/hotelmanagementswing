@@ -17,10 +17,10 @@ public class ResourceReader {
 	
 	private static Map cache = new HashMap();
 
-	public static Image getImageFromJar(String sPath, Class clazz) {
+	public static Image getImageFromJar(String sPath, ClassLoader classLoader) {
 		Image image = (Image) cache.get(sPath);
 		if (image == null) {
-			InputStream inputstream = clazz.getClassLoader().getResourceAsStream(sPath);
+			InputStream inputstream = classLoader.getResourceAsStream(sPath);
 			log.debug(inputstream);
 			if (inputstream != null) {
 				ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();

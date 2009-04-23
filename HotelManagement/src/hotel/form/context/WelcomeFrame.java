@@ -24,21 +24,13 @@ public class WelcomeFrame extends BasePanel {
 		this.parent.setTitle(MessageUtil.getMessage("MainFrame.WelcomeFrame.title"));
 		this.setLayout(new BorderLayout());
 		
-		//Image img = Toolkit.getDefaultToolkit().getImage("./imgload.jpg");
-		/*ImageIcon img = new ImageIcon("./imgload.jpg"); 
-		JLabel imgLabel = new JLabel(img); 
-		this.add(imgLabel, new Integer(Integer.MIN_VALUE)); 
-		//imgLabel.setBounds(0,0,img.getIconWidth(), img.getIconHeight()); 
-		imgLabel.setBounds(0,0,this.parent.getWidth(), this.parent.getHeight());
-		// 将contentPane设置成透明的
-		this.setOpaque(false); */
-		Image image = ResourceReader.getImageFromJar("resources/welcome.JPG", WelcomeFrame.class);
-		JImagePane panel = new JImagePane(image/*new ImageIcon("./resources/welcome.JPG").getImage()*/, JImagePane.SCALED);
+		//TODO Image image = ResourceReader.getImageFromJar("resources/welcome.JPG", WelcomeFrame.class.getClassLoader());
+		//JImagePane panel = new JImagePane(image/*new ImageIcon("./resources/welcome.JPG").getImage()*/, JImagePane.SCALED);
 		//或者
 //		JImagePane panel = new JImagePane();
 //		panel.setBackgroundImage(new ImageIcon("003.png");
 		
-		this.add(panel, BorderLayout.CENTER);
+		//this.add(panel, BorderLayout.CENTER);
 	}
 
 	public void access(MainFrame vistor) {

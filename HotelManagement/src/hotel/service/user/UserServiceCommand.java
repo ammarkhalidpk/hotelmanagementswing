@@ -36,7 +36,19 @@ public class UserServiceCommand extends AbstractServiceCommand {
 			executionContext.getSession().delete(user);
 		} else if (this.command.equals(getUserByIdCard())) {
 			String idCard = (String) this.condition.get("idCard");
-			return executionContext.getSession().createQuery("from hotel.model.user.User user where user.identifier = :idCard").setParameter("idCard", idCard).uniqueResult();
+			return executionContext.getSession().createQuery("from hotel.model.user.User user where user.identifier = :idCard").setParameter("idCard", idCard).list();
+		} else if (this.command.equals(getByIdCommand())) {
+			long id = Long.parseLong((String) this.condition.get("id"));
+			return executionContext.getSession().createQuery("from hotel.model.user.User user where user.id = :id").setParameter("id", id).uniqueResult();
+		} else if (this.command.equals(getAllGuestAsArray())) {
+			List result = executionContext.getSession().createQuery("from hotel.model.user.Guest guest order by guest.point desc").list();
+			return this.toArray(result);
+		} else if (this.command.equals(getAllVipAsArray())) {
+			List result = executionContext.getSession().createQuery("from hotel.model.user.VIPUser vip order by vip.point desc").list();
+			return this.toArray(result);
+		} else if (this.command.equals(getVipByIdCardCommand())) {
+			String idCard = (String) this.condition.get("idCard");
+			return executionContext.getSession().createQuery("from hotel.model.user.VIPUser vip where vip.identifier = :idCard").setParameter("idCard", idCard).uniqueResult();
 		}
 		return null;
 	}
@@ -44,5 +56,16 @@ public class UserServiceCommand extends AbstractServiceCommand {
 	public static String getUserByIdCard() {
 		return "getUserByIdCard";
 	}
+	
+	public static String getAllGuestAsArray() {
+		return "getAllGuestAsArray";
+	}
+	
+	public static String getAllVipAsArray() {
+		return "getAllVipAsArray";
+	}
 
+	public static String getVipByIdCardCommand() {
+		return "getVipByIdCardCommand";
+	}
 }

@@ -3,12 +3,14 @@ package hotel.model.dingroom;
 import hotel.model.BaseModel;
 import hotel.model.footinfo.FootInfo;
 import hotel.model.room.Room;
+import hotel.model.user.Guest;
 import hotel.model.user.User;
 import hotel.service.CommandService;
 import hotel.util.MessageUtil;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -81,6 +83,20 @@ public class DingRoom extends BaseModel {
 		return footInfo;
 	}
 	
+	private static Map descriptionMapDiscount = new HashMap();
+	static {
+		descriptionMapDiscount.put("4级VIP", 0.8 + "");
+		descriptionMapDiscount.put("3级VIP", 0.85 + "");
+		descriptionMapDiscount.put("2级VIP", 0.9 + "");
+		descriptionMapDiscount.put("1级VIP", 0.95 + "");
+	}
+	private float getDiscountByUser(User user) {
+		if (user instanceof Guest) {
+			return 1;
+		}
+		return Float.parseFloat((String) descriptionMapDiscount.get(user.getDescription()));
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -95,6 +111,7 @@ public class DingRoom extends BaseModel {
 
 	public void setUser(User user) {
 		this.user = user;
+		setDiscount(getDiscountByUser(user));
 	}
 
 	public Room getRoom() {

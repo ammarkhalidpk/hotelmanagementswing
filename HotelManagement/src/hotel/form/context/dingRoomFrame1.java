@@ -1,6 +1,5 @@
 package hotel.form.context;
 
-import hotel.dbtools.DBTools;
 import hotel.form.main.MainFrame;
 import hotel.hibernate.HibernateProxyUtil;
 import hotel.model.room.Room;
@@ -22,13 +21,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -303,9 +299,9 @@ public class dingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 				System.out.println("1ªÚ0≤Â»Î≥…");
 				//*/
 				hotel.model.dingroom.DingRoom dingRoom = new hotel.model.dingroom.DingRoom();
-				dingRoom.setUser(this.getUser(txt1, txt2));
+				User user = this.getUser(txt1, txt2);
+				dingRoom.setUser(user);
 				dingRoom.setRoom(this.selectedRoom);
-				dingRoom.setDiscount(1);
 				dingRoom.setStart(DateUtil.getDate(dingRoomDate.getText().trim()));
 				Map condition = new HashMap();
 				condition.put("entity", dingRoom);
@@ -331,8 +327,8 @@ public class dingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 	private User getUser(String name, String idCard) {
 		Map condition = new HashMap();
 		condition.put("idCard", idCard);
-		Object user = CommandService.getInstance().execute(new UserServiceCommand(UserServiceCommand.getUserByIdCard(), condition));
-		user = HibernateProxyUtil.getImplementation(user);
+		List users = (List) CommandService.getInstance().execute(new UserServiceCommand(UserServiceCommand.getUserByIdCard(), condition));
+		User user = getHightestLevelUser(users);
 		if (user != null) {
 			if (user instanceof Guest) {
 				((Guest)user).setPoint(((Guest)user).getPoint() + 1);
@@ -349,6 +345,23 @@ public class dingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 			CommandService.getInstance().assignId(guest);
 			return guest;
 		}
+	}
+
+	private User getHightestLevelUser(List users) {
+		VIPUser vip = null;
+		Guest guest = null;
+		for (Iterator iter = users.iterator(); iter.hasNext(); ) {
+			User user = (User) iter.next();
+			user = (User) HibernateProxyUtil.getImplementation(user);
+			if (user instanceof Guest) {
+				guest = (Guest) user;
+			} else if (user instanceof VIPUser) {
+				vip = (VIPUser) user;
+				return vip;
+			}
+			
+		}
+		return guest;
 	}
 
 	public void access(MainFrame vistor) {

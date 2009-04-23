@@ -39,6 +39,8 @@ public class DingRoomServiceCommand extends AbstractServiceCommand {
 			executionContext.getSession().delete(dingRoom);
 		} else if (this.command.equals(getFootedDingRoomCommand())) {
 			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null and dingRoom.footState = :footState").setParameter("footState", "已结算").list();
+		} else if(this.command.equals(getEndedAndUnfootDingRoomCommand())) {
+			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null and dingRoom.footState = :footState").setParameter("footState", "未结算").list();
 		} else if (this.command.equals(getUnfootDingRoomCommand())) {
 			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where (dingRoom.end is not null and dingRoom.footState = :footState) or dingRoom.end is null").setParameter("footState", "未结算").list();
 		} else if (this.command.equals(getUnfootDingRoomAsArrayCommand())) {
@@ -89,6 +91,10 @@ public class DingRoomServiceCommand extends AbstractServiceCommand {
 
 	public static String getUnfootDingRoomByRoomNumCommand() {
 		return "getUnfootDingRoomByRoomNumCommand";
+	}
+	
+	public static String getEndedAndUnfootDingRoomCommand() {
+		return "getEndedAndUnfootDingRoomCommand";
 	}
 
 }

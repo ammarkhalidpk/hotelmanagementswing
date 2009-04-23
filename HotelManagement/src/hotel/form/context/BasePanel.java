@@ -9,7 +9,7 @@ import javax.swing.JTable;
 public abstract class BasePanel extends JPanel implements Accessable {
 	protected JFrame parent;
 	
-	protected JTable tabShow;
+	protected JTable tabShow = new JTable();
 	
 	public abstract void refresh();
 	

@@ -36,7 +36,6 @@ public class FootInfo extends BasePanel implements ActionListener, ItemListener 
 	 */
 	private static final long serialVersionUID = 1L;
 	String[] strtf = { "0" };
-	// String[] strfj={"101","102","103","201","202","203","301","302","303"};
 	public JButton jButton1, jButton2;
 	public JTextField jTextField1 = new JTextField();
 	public JComboBox waitForFoot = new JComboBox();
@@ -158,7 +157,7 @@ public class FootInfo extends BasePanel implements ActionListener, ItemListener 
 
 	private void initWaitForFoot(JComboBox waitForFoot) {
 		waitForFoot.removeAllItems();
-		List<?> unFootDingRoom = (List<?>) CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getUnfootDingRoomCommand()), false);
+		List<?> unFootDingRoom = (List<?>) CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getEndedAndUnfootDingRoomCommand()), false);
 		for (Iterator iter = unFootDingRoom.iterator(); iter.hasNext(); ) {
 			hotel.model.dingroom.DingRoom dingRoom = (hotel.model.dingroom.DingRoom) iter.next();
 			waitForFoot.addItem(dingRoom.getRoom().getRoomNum());
@@ -224,6 +223,7 @@ public class FootInfo extends BasePanel implements ActionListener, ItemListener 
 					selectedDingRoom = null;
 				}
 			}
+			JOptionPane.showMessageDialog(FootInfo.this, "已结算", "提示信息", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
