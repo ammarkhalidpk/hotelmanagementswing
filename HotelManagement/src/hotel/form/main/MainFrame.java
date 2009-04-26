@@ -17,7 +17,6 @@ import hotel.form.context.Statistics;
 import hotel.form.context.UserFrame;
 import hotel.form.context.VIPGenerate;
 import hotel.form.context.WelcomeFrame;
-import hotel.form.context.DingRoomFrame1;
 import hotel.util.MessageUtil;
 
 import java.awt.BorderLayout;
