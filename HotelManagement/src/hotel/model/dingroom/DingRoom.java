@@ -24,10 +24,12 @@ public class DingRoom extends BaseModel {
 		fieldMapLabel.put("id", MessageUtil.getMessage("DingRoom.id"));
 		fieldMapLabel.put("user", MessageUtil.getMessage("DingRoom.user"));
 		fieldMapLabel.put("room", MessageUtil.getMessage("DingRoom.room"));
+		fieldMapLabel.put("create", MessageUtil.getMessage("DingRoom.create"));
 		fieldMapLabel.put("start", MessageUtil.getMessage("DingRoom.start"));
 		fieldMapLabel.put("end", MessageUtil.getMessage("DingRoom.end"));
 		fieldMapLabel.put("discount", MessageUtil.getMessage("DingRoom.discount"));
 		fieldMapLabel.put("footState", MessageUtil.getMessage("DingRoom.footState"));
+		fieldMapLabel.put("pledge", MessageUtil.getMessage("DingRoom.pledge"));
 		fieldMapLabel.put("description", MessageUtil.getMessage("DingRoom.description"));
 	}
 
@@ -45,6 +47,10 @@ public class DingRoom extends BaseModel {
 	 */
 	private Room room;
 	/**
+	 * 订房时间
+	 */
+	private Date create;
+	/**
 	 * 入住时间
 	 */
 	private Date start;
@@ -60,6 +66,10 @@ public class DingRoom extends BaseModel {
 	 * 是否结算
 	 */
 	private String footState = "";
+	/**
+	 * 押金
+	 */
+	private float pledge;
 	/**
 	 * 备注
 	 */
@@ -160,6 +170,22 @@ public class DingRoom extends BaseModel {
 
 	public void setFootState(String footState) {
 		this.footState = footState;
+	}
+
+	public Date getCreate() {
+		return create;
+	}
+
+	public void setCreate(Date create) {
+		this.create = create;
+	}
+
+	public float getPledge() {
+		return pledge;
+	}
+
+	public void setPledge(float pledge) {
+		this.pledge = pledge;
 	}
 
 }

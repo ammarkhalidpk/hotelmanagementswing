@@ -42,7 +42,7 @@ public abstract class AbstractServiceCommand implements Command {
 		this.condition.put(key, value);
 	}
 	
-	protected String[][] toArray(List list) {
+	public static String[][] toArray(List list) {
 		BaseModel model = null;
 		if (list.size() > 0) {
 			Map cols = new LinkedHashMap();

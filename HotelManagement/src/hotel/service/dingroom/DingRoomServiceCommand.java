@@ -55,7 +55,11 @@ public class DingRoomServiceCommand extends AbstractServiceCommand {
 			return this.toArray(executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null and dingRoom.footState = :footState").setParameter("footState", "未结算").list());
 		} else if (this.command.equals(getUnfootDingRoomByRoomNumCommand())) {
 			String roomNum = (String) this.condition.get("roomNum");
-			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.end is not null and dingRoom.footState = :footState and dingRoom.room.roomNum = :roomNum").setParameter("roomNum", roomNum).setParameter("footState", "未结算").list();
+			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.room.roomNum = :roomNum and dingRoom.end is null or (dingRoom.end is not null and dingRoom.footState = :footState and dingRoom.room.roomNum = :roomNum)").setParameter("roomNum", roomNum).setParameter("footState", "未结算").list();
+		}
+		else if (this.command.equals(getAllByIdCardCommand())) {
+			String idCard = (String) this.condition.get("idCard");
+			return executionContext.getSession().createQuery("from hotel.model.dingroom.DingRoom dingRoom where dingRoom.user.identifier = :idCard").setParameter("idCard", idCard).list();
 		}
 		return null;
 	}
@@ -95,6 +99,10 @@ public class DingRoomServiceCommand extends AbstractServiceCommand {
 	
 	public static String getEndedAndUnfootDingRoomCommand() {
 		return "getEndedAndUnfootDingRoomCommand";
+	}
+	
+	public static String getAllByIdCardCommand() {
+		return "getAllByIdCardCommand";
 	}
 
 }

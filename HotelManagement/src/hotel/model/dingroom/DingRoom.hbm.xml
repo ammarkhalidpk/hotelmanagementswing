@@ -12,10 +12,12 @@
     <id name="id" column="ID_"><generator class="native" /></id>
     <discriminator type="char" column="CLASS_"/>
 
+	<property name="create"       column="CREATE_" />
 	<property name="start"        column="START_" />
     <property name="end"    	  column="END_" />
     <property name="discount"     column="DISCOUNT_" />
     <property name="footState"	  column="FOOTSTATE_" />
+    <property name="pledge"	      column="PLEDGE_" />
     <property name="description"  column="DESCRIPTION_" length="4000" />
 
 	<many-to-one name="user"

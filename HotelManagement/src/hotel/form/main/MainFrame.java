@@ -17,7 +17,7 @@ import hotel.form.context.Statistics;
 import hotel.form.context.UserFrame;
 import hotel.form.context.VIPGenerate;
 import hotel.form.context.WelcomeFrame;
-import hotel.form.context.dingRoomFrame1;
+import hotel.form.context.DingRoomFrame1;
 import hotel.util.MessageUtil;
 
 import java.awt.BorderLayout;
@@ -96,6 +96,11 @@ public class MainFrame extends JFrame {
 	}
 
 	private class CenterPanel extends JPanel {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public CenterPanel() {
 			super();
 			this.setLayout(new BorderLayout());
@@ -223,7 +228,11 @@ public class MainFrame extends JFrame {
 		center.add(generate, BorderLayout.CENTER);
 	}
 
-	public void visit(dingRoomFrame1 dingRoomFrame1) {
-		center.add(dingRoomFrame1, BorderLayout.CENTER);
+	public void visit(FormQuery formQuery) {
+		center.add(formQuery, BorderLayout.CENTER);
+	}
+
+	public void visit(RoomSell roomSell) {
+		center.add(roomSell, BorderLayout.CENTER);
 	}
 }
