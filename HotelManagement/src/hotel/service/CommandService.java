@@ -17,7 +17,7 @@ public class CommandService {
 	private User user;
 
 	private CommandService() {
-		/*启动和关闭数据库/
+		//*启动和关闭数据库/
 		final String mysqlPath = this.getMysqlPath();
 		//注册关闭数据库的钩子
 		Runtime.getRuntime().addShutdownHook(new Thread() {

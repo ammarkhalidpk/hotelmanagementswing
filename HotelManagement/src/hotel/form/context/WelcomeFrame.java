@@ -23,7 +23,7 @@ public class WelcomeFrame extends BasePanel {
 		super(parent);
 		this.parent.setTitle(MessageUtil.getMessage("MainFrame.WelcomeFrame.title"));
 		this.setLayout(new BorderLayout());
-		/*/
+		//*/
 		Image image = ResourceReader.getImageFromJar("resources/welcome.JPG", WelcomeFrame.class.getClassLoader());
 		JImagePane panel = new JImagePane(image, JImagePane.SCALED);
 		//或者
