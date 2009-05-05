@@ -1,9 +1,13 @@
 package hotel.service.user;
 
+import hotel.hibernate.HibernateProxyUtil;
+import hotel.model.user.Guest;
 import hotel.model.user.User;
+import hotel.model.user.VIPUser;
 import hotel.service.AbstractServiceCommand;
 import hotel.service.ExecutionContext;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +30,7 @@ public class UserServiceCommand extends AbstractServiceCommand {
 			Query query = executionContext.getSession().createQuery("from hotel.model.user.User user where user.loginName = :logName and user.password = :password");
 			query.setParameter("logName", this.condition.get("logName"));
 			query.setParameter("password", this.condition.get("password"));
-			return query.uniqueResult();
+			return getHightestLevelUser(query.list());
 		} else if (this.command.equalsIgnoreCase("getAllAsArray")) {
 			List all =  executionContext.getSession().createQuery("from hotel.model.user.User user").list();
 			return this.toArray(all);
@@ -52,7 +56,30 @@ public class UserServiceCommand extends AbstractServiceCommand {
 		}
 		return null;
 	}
-
+	
+	private User getHightestLevelUser(List users) {
+		VIPUser vip = null;
+		Guest guest = null;
+		User u = null;
+		for (Iterator iter = users.iterator(); iter.hasNext(); ) {
+			User user = (User) iter.next();
+			user = (User) HibernateProxyUtil.getImplementation(user);
+			if (user instanceof Guest) {
+				guest = (Guest) user;
+			} else if (user instanceof VIPUser) {
+				vip = (VIPUser) user;
+				return vip;
+			} else {
+				u = user;
+			}
+			
+		}
+		if (guest != null)
+		return guest;
+		else 
+			return u;
+	}
+	
 	public static String getUserByIdCard() {
 		return "getUserByIdCard";
 	}

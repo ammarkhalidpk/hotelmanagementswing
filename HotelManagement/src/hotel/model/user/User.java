@@ -20,11 +20,10 @@ public class User extends BaseModel {
 	static {
 		fieldMapLabel.put("id", MessageUtil.getMessage("User.id"));
 		fieldMapLabel.put("name", MessageUtil.getMessage("User.name"));
-		fieldMapLabel
-				.put("loginName", MessageUtil.getMessage("User.loginName"));
+		fieldMapLabel.put("loginName", MessageUtil.getMessage("User.loginName"));
 		fieldMapLabel.put("password", MessageUtil.getMessage("User.password"));
-		fieldMapLabel.put("description", MessageUtil
-				.getMessage("User.description"));
+		fieldMapLabel.put("description", MessageUtil.getMessage("User.description"));
+		fieldMapLabel.put("role", MessageUtil.getMessage("User.role"));
 	}
 
 	public static Map getFieldMapLabel() {
@@ -40,6 +39,8 @@ public class User extends BaseModel {
 	protected String password;
 
 	protected String description;
+	
+	protected Role role;
 
 	public User() {
 	}
@@ -141,5 +142,13 @@ public class User extends BaseModel {
 	}
 
 	public void setPoint(int point) {
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 }

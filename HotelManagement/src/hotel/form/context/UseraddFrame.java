@@ -1,7 +1,10 @@
 package hotel.form.context;
 
+import hotel.model.user.Guest;
+import hotel.model.user.Role;
 import hotel.model.user.User;
 import hotel.service.CommandService;
+import hotel.service.user.RoleServiceCommand;
 import hotel.service.user.UserServiceCommand;
 
 import java.awt.Color;
@@ -10,6 +13,8 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -20,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
 
 public class UseraddFrame extends JDialog implements ActionListener {
 	/**
@@ -66,15 +72,14 @@ public class UseraddFrame extends JDialog implements ActionListener {
 		pwd.setFont(new java.awt.Font("Dialog", Font.BOLD, 20));
 		pwd.setBounds(new Rectangle(100, 65, 100, 29));
 
-		lab3 = new JLabel("类  型");
+		lab3 = new JLabel("角    色");
 		lab3.setForeground(Color.BLUE);
 		lab3.setFont(new java.awt.Font("Dialog", Font.BOLD, 20));
 		lab3.setHorizontalAlignment(SwingConstants.CENTER);
 		lab3.setBounds(new Rectangle(21, 115, 80, 29));
 
 		// cbo = new JComboBox();
-		cbo.addItem("普通用户");
-		cbo.addItem("超级用户");
+		initRoleSelector(cbo);
 		cbo.setBounds(new Rectangle(100, 115, 100, 29));
 
 		btnOk = new JButton("确定");
@@ -110,23 +115,47 @@ public class UseraddFrame extends JDialog implements ActionListener {
 		this.setVisible(true);
 	}
 
+	private void initRoleSelector(JComboBox cbo) {
+		List roles = (List) CommandService.getInstance().execute(new RoleServiceCommand(RoleServiceCommand.getAllCommand()));
+		for (Iterator iter = roles.iterator(); iter.hasNext(); ) {
+			Role role = (Role) iter.next();
+			if (role.getCode().equals("admin")) {
+				cbo.addItem(role);	
+			}
+		}
+	}
+
 	public void actionPerformed(ActionEvent e) {
 		String strcmd = e.getActionCommand();
 		if (strcmd.equals("ok")) {
 
 			String txtName1 = txtName.getText();
 			String pwd1 = pwd.getText();
-			String cbo1 = (String) cbo.getSelectedItem();
+			Role role = (Role) cbo.getSelectedItem();
 			try {
+				if (role.getCode().equals("admin")) {
+					User user = new User();
+					user.setName(txtName1);
+					user.setLoginName(txtName1);
+					user.setPassword(pwd1);
+					user.setDescription("");
+					user.setRole(role);
+					Map condition = new HashMap();
+					condition.put("entry", user);
+					CommandService.getInstance().execute(new UserServiceCommand(UserServiceCommand.getSaveOrUpdateEntryCommand(), condition));
+				}
+				else if (role.getCode().equals("guest")) {
+					Guest guest = new Guest();
+					guest.setName(txtName1);
+					guest.setLoginName(txtName1);
+					guest.setPassword(pwd1);
+					guest.setDescription("");
+					guest.setRole(role);
+					Map condition = new HashMap();
+					condition.put("entry", guest);
+					CommandService.getInstance().execute(new UserServiceCommand(UserServiceCommand.getSaveOrUpdateEntryCommand(), condition));
+				}
 				
-				User user = new User();
-				user.setName(cbo1);
-				user.setLoginName(txtName1);
-				user.setPassword(pwd1);
-				user.setDescription("");
-				Map condition = new HashMap();
-				condition.put("entry", user);
-				CommandService.getInstance().execute(new UserServiceCommand(UserServiceCommand.getSaveOrUpdateEntryCommand(), condition));
 				JOptionPane.showMessageDialog(this, "登记成功！", "成功",
 							JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception ea) {

@@ -23,14 +23,15 @@ public class WelcomeFrame extends BasePanel {
 		super(parent);
 		this.parent.setTitle(MessageUtil.getMessage("MainFrame.WelcomeFrame.title"));
 		this.setLayout(new BorderLayout());
-		
-		//TODO Image image = ResourceReader.getImageFromJar("resources/welcome.JPG", WelcomeFrame.class.getClassLoader());
-		//JImagePane panel = new JImagePane(image/*new ImageIcon("./resources/welcome.JPG").getImage()*/, JImagePane.SCALED);
+		/*/
+		Image image = ResourceReader.getImageFromJar("resources/welcome.JPG", WelcomeFrame.class.getClassLoader());
+		JImagePane panel = new JImagePane(image, JImagePane.SCALED);
 		//或者
 //		JImagePane panel = new JImagePane();
 //		panel.setBackgroundImage(new ImageIcon("003.png");
 		
-		//this.add(panel, BorderLayout.CENTER);
+		this.add(panel, BorderLayout.CENTER);
+		//*/
 	}
 
 	public void access(MainFrame vistor) {

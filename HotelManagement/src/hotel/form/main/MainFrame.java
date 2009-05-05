@@ -1,22 +1,20 @@
 package hotel.form.main;
 
 import hotel.form.context.Accessable;
-import hotel.form.context.AllQuery;
 import hotel.form.context.BaseInfo;
-import hotel.form.context.Cashier;
 import hotel.form.context.DingRoom;
 import hotel.form.context.FootInfo;
 import hotel.form.context.FormQuery;
-import hotel.form.context.FrontDeskCheck;
 import hotel.form.context.GuestroomStandardFrame;
 import hotel.form.context.HelpFrame;
-import hotel.form.context.HistoryTreaty;
-import hotel.form.context.Receive;
+import hotel.form.context.RoleAuthFrame;
 import hotel.form.context.RoomSell;
-import hotel.form.context.Statistics;
 import hotel.form.context.UserFrame;
 import hotel.form.context.VIPGenerate;
 import hotel.form.context.WelcomeFrame;
+import hotel.model.resource.Function;
+import hotel.service.CommandService;
+import hotel.service.resource.ResourceServiceCommand;
 import hotel.util.MessageUtil;
 
 import java.awt.BorderLayout;
@@ -32,8 +30,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -61,7 +61,7 @@ public class MainFrame extends JFrame {
 	private MainFrame mainFrame;
 	private Map funCommandMapFun;
 
-	public MainFrame() {
+	public MainFrame() throws ClassNotFoundException {
 		mainFrame = this;
 		java.awt.Container me = this.getContentPane();
 		lab = new JLabel(MessageUtil.getMessage("MainFrame.title"));
@@ -108,8 +108,22 @@ public class MainFrame extends JFrame {
 	}
 
 	private class WestPanel extends JPanel implements ActionListener {
-		public WestPanel() {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public WestPanel() throws ClassNotFoundException {
 			funCommandMapFun = new LinkedHashMap();
+			Map condition = new HashMap();
+			condition.put("loginUser", CommandService.getInstance().getLoginUser());
+			List<?> functions = (List<?>) CommandService.getInstance().execute(new ResourceServiceCommand(ResourceServiceCommand.getFunctionByLoginUserCommand(), condition), false);
+			for (Iterator<?> iter = functions.iterator(); iter.hasNext(); ) {
+				Function function = (Function) iter.next();
+				this.registerFunction(funCommandMapFun, function);
+			}
+			CommandService.getInstance().close();
+			/*/
 			this.registerFunction("sta", "MainFrame.room.stand.make", GuestroomStandardFrame.class);
 			
 			this.registerFunction("base", "MainFrame.room.stand.query", BaseInfo.class);
@@ -146,6 +160,7 @@ public class MainFrame extends JFrame {
 			this.registerFunction("welcome", "MainFrame.btnWelcome", WelcomeFrame.class);
 			
 			this.registerFunction("btnExit", "MainFrame.exit", BaseInfo.class);
+			//*/
 			
 			this.setLayout(new GridLayout(funCommandMapFun.keySet().size(), 1));
 			for (Iterator iter = funCommandMapFun.entrySet().iterator(); iter.hasNext(); ) {
@@ -153,6 +168,12 @@ public class MainFrame extends JFrame {
 				this.add((Component) entry.getKey());
 				((AbstractButton) entry.getKey()).addActionListener(this);
 			}
+		}
+
+		private void registerFunction(Map funCommandMapFun, Function function) throws ClassNotFoundException {
+			JButton funButton = new JButton(MessageUtil.getMessage(function.getLabel()));
+			funButton.setActionCommand(function.getCommandName());
+			funCommandMapFun.put(funButton, Class.forName(function.getClassName()));
 		}
 
 		private void registerFunction(String commandName, String butName, Class funClass) {
@@ -233,5 +254,9 @@ public class MainFrame extends JFrame {
 
 	public void visit(RoomSell roomSell) {
 		center.add(roomSell, BorderLayout.CENTER);
+	}
+
+	public void visit(RoleAuthFrame roleAuthFrame) {
+		center.add(roleAuthFrame, BorderLayout.CENTER);
 	}
 }

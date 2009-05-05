@@ -1,5 +1,7 @@
 package hotel.service;
 
+import hotel.model.user.User;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +13,8 @@ public class CommandService {
 	private static final CommandService instance = new CommandService();
 	
 	private static final ThreadLocal context = new ThreadLocal();
+
+	private User user;
 
 	private CommandService() {
 		/*启动和关闭数据库/
@@ -186,5 +190,13 @@ public class CommandService {
 		} finally {
 			close();
 		}
+	}
+
+	public void setLoginUser(User user) {
+		this.user = user;
+	}
+	
+	public User getLoginUser() {
+		return this.user;
 	}
 }

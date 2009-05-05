@@ -4,11 +4,13 @@ import hotel.form.main.MainFrame;
 import hotel.hibernate.HibernateProxyUtil;
 import hotel.model.room.Room;
 import hotel.model.user.Guest;
+import hotel.model.user.Role;
 import hotel.model.user.User;
 import hotel.model.user.VIPUser;
 import hotel.service.CommandService;
 import hotel.service.dingroom.DingRoomServiceCommand;
 import hotel.service.room.RoomServiceCommand;
+import hotel.service.user.RoleServiceCommand;
 import hotel.service.user.UserServiceCommand;
 import hotel.util.DateUtil;
 import hotel.util.ui.mydatechooser.MyDateChooser;
@@ -340,9 +342,13 @@ public class DingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 			CommandService.getInstance().execute(new UserServiceCommand(UserServiceCommand.getSaveOrUpdateEntryCommand(), condition));
 			return (User) user;
 		} else {
+			Role defGuestRole = (Role) CommandService.getInstance().execute(new RoleServiceCommand(RoleServiceCommand.getDefGuestRoleCommand()));
 			Guest guest = new Guest();
 			guest.setName(name);
+			guest.setLoginName(name);
+			guest.setPassword(name);
 			guest.setIdentifier(idCard);
+			guest.setRole(defGuestRole);
 			CommandService.getInstance().assignId(guest);
 			return guest;
 		}

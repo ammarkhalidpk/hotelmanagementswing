@@ -94,5 +94,16 @@ public class Guest extends User {
 	public String toString() {
 		return this.getIdentifier() + "(" + this.getName() + ")";
 	}
+	
+	public String getLoginName() {
+		return loginName;
+	}
 
+	public String getPassword() {
+		return password;
+	}
+	
+	public Role getRole() {
+		return role;
+	}
 }

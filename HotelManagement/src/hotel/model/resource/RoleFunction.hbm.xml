@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-access="field">
+
+  <class name="hotel.model.resource.RoleFunction" 
+         table="HOTEL_ROLEFUNCTION"
+         discriminator-value="A">
+    <id name="id" column="ID_"><generator class="native" /></id>
+    <discriminator type="char" column="CLASS_"/>
+
+    <many-to-one name="function"
+    			 column="FUNCTION_"
+    			 foreign-key="FK_ROLEFUNCTION_FUNCTION"
+    			 index="IDX_ROLEFUNCTION_FUNCTION" />
+    			 
+  </class>
+
+</hibernate-mapping>

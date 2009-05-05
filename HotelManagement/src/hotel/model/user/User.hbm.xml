@@ -16,6 +16,11 @@
     <property name="loginName"    column="LOGINNAME_" />
     <property name="password"     column="PASSWORD_" />
     <property name="description"  column="DESCRIPTION_" length="4000" />
+    
+    <many-to-one name="role"
+                 column="ROLE_"
+                 foreign-key="FK_USER_ROLE"
+                 index="IDX_USER_ROLE"/>
 
 <!--     
     <many-to-one name="task"

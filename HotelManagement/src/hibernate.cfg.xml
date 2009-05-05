@@ -36,11 +36,18 @@
 	
 	<mapping resource="hotel/model/user/VIPUser.hbm.xml"/>
 	
+	<mapping resource="hotel/model/user/Role.hbm.xml"/>
+	
 	<mapping resource="hotel/model/room/Room.hbm.xml"/>
 	
 	<mapping resource="hotel/model/dingroom/DingRoom.hbm.xml"/>
 	
 	<mapping resource="hotel/model/footinfo/FootInfo.hbm.xml"/>
+	
+	<mapping resource="hotel/model/resource/Function.hbm.xml"/>
+	
+	<mapping resource="hotel/model/resource/RoleFunction.hbm.xml"/>
+	
     
   </session-factory>
 </hibernate-configuration>

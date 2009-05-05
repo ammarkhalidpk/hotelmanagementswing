@@ -121,6 +121,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 			con.put("logName", name);
 			con.put("password", paw);
 			User user = (User) CommandService.getInstance().execute(new UserServiceCommand("getUser", con));
+			CommandService.getInstance().setLoginUser(user);
 			if (user == null) {
 				javax.swing.JOptionPane.showMessageDialog(this, MessageUtil.getMessage("LoginFrame.loginFailHint"),
 						MessageUtil.getMessage("LoginFrame.loginFailHint.title"), JOptionPane.ERROR_MESSAGE);
