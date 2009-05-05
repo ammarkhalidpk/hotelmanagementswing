@@ -85,12 +85,17 @@ public class DingRoom extends BaseModel {
 	
 	public FootInfo createFootInfo() {
 		FootInfo footInfo = new FootInfo(this);
+		int days = this.getDays();
+		float paied = this.room.getPrise() * days * this.discount;
+		paied = paied - this.getPledge();
+		footInfo.setPaied(paied);
+		return footInfo;
+	}
+	
+	public int getDays() {
 		long t = this.end.getTime() - this.start.getTime();
 		int days = (int) (t/60/60/1000/24);
-		float paied = this.room.getPrise() * days * this.discount;
-		footInfo.setPaied(paied);
-		CommandService.getInstance().assignId(footInfo);
-		return footInfo;
+		return days;
 	}
 	
 	private static Map descriptionMapDiscount = new HashMap();

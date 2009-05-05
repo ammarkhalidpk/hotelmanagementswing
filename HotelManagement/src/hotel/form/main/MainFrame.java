@@ -1,6 +1,7 @@
 package hotel.form.main;
 
 import hotel.form.context.Accessable;
+import hotel.form.context.AllQuery;
 import hotel.form.context.BaseInfo;
 import hotel.form.context.DingRoom;
 import hotel.form.context.FootInfo;
@@ -258,5 +259,9 @@ public class MainFrame extends JFrame {
 
 	public void visit(RoleAuthFrame roleAuthFrame) {
 		center.add(roleAuthFrame, BorderLayout.CENTER);
+	}
+
+	public void visit(AllQuery allQuery) {
+		center.add(allQuery, BorderLayout.CENTER);
 	}
 }

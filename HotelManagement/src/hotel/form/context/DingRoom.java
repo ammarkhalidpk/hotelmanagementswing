@@ -59,6 +59,7 @@ public class DingRoom extends BasePanel {
 			allDingRoomInfo = new JButton("查询所有订房信息");
 			inUse = new JButton("使用房间");
 			btnSelect2 = new JButton("已退房间");
+			JButton addPledge = new JButton("增加押金");
 
 			this.add(btnInsert);
 			this.add(reserve);
@@ -67,6 +68,7 @@ public class DingRoom extends BasePanel {
 			this.add(allDingRoomInfo);
 			this.add(inUse);
 			this.add(btnSelect2);
+			this.add(addPledge);
 
 			allDingRoomInfo.addActionListener(this);
 			btnInsert.addActionListener(this);
@@ -75,6 +77,7 @@ public class DingRoom extends BasePanel {
 			btnDelete.addActionListener(this);
 			reserve.addActionListener(this);
 			start.addActionListener(this);
+			addPledge.addActionListener(this);
 
 			allDingRoomInfo.setActionCommand("select");
 			btnInsert.setActionCommand("insert");
@@ -83,6 +86,7 @@ public class DingRoom extends BasePanel {
 			btnDelete.setActionCommand("delete");
 			reserve.setActionCommand("reserve");
 			start.setActionCommand("start");
+			addPledge.setActionCommand("addPledge");
 		}
 
 		public void actionPerformed(ActionEvent e) {
@@ -152,6 +156,34 @@ public class DingRoom extends BasePanel {
 			}
 			if (str.equals("reserve")) {
 				new DingRoomFrame2(DingRoom.this);
+			}
+			if (str.equals("addPledge")) {
+				int selectedRowIndex = tabShow.getSelectedRow();
+				if (selectedRowIndex != -1) {
+					//首先根据id得到DingRoom实体
+					String id = (String) tabShow.getModel().getValueAt(selectedRowIndex, 0);
+					Map condition = new HashMap();
+					condition.put("id", id);
+					hotel.model.dingroom.DingRoom dingRoom = (hotel.model.dingroom.DingRoom) CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getByIdCommand(), condition));
+					if (dingRoom.getEnd() != null) {
+						JOptionPane.showMessageDialog(DingRoom.this, "请选择房间正在使用的房间", "错误提示", JOptionPane.ERROR_MESSAGE);
+					} else {
+						String roomNum = (String) tabShow.getModel().getValueAt(selectedRowIndex, 2);
+						
+						AddPledgeFrame addPledgeFrame = new AddPledgeFrame(roomNum);
+						float addPledge = addPledgeFrame.getAddPledge();
+						boolean confirmAdd = addPledgeFrame.getConfirmAdd();
+						if (addPledge > 0 && confirmAdd) {
+							dingRoom.setPledge(dingRoom.getPledge() + addPledge);
+							condition.put("entity", dingRoom);
+							CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getSaveOrUpdateEntryCommand(), condition));
+							JOptionPane.showMessageDialog(DingRoom.this, "已增加押金：" + addPledge, "消息提示", JOptionPane.INFORMATION_MESSAGE);
+							refresh();
+						}
+					}
+				} else {
+					JOptionPane.showMessageDialog(DingRoom.this, "请选择房间", "错误提示", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		}
 	}

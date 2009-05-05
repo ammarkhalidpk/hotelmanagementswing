@@ -198,20 +198,27 @@ public class FootInfo extends BasePanel implements ActionListener, ItemListener 
 		}
 	}
 
-	public void foot(DingRoom selectedDingRoom) {
+	public boolean foot(DingRoom selectedDingRoom) {
 		hotel.model.footinfo.FootInfo footInfo = selectedDingRoom.createFootInfo();
-		selectedDingRoom.setFootState("已结算");
-		Map condition = new HashMap();
-		condition.put("entity", selectedDingRoom);
-		CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getSaveOrUpdateEntryCommand(), condition));
-		waitForFoot.removeItem(selectedDingRoom.getRoom().getRoomNum());
+		CashierFrame cashierFrame = new CashierFrame(footInfo);
+		boolean cashed = cashierFrame.isCashed();
+		if (cashed) {
+			selectedDingRoom.setFootState("已结算");
+			CommandService.getInstance().assignId(footInfo);
+			Map condition = new HashMap();
+			condition.put("entity", selectedDingRoom);
+			CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getSaveOrUpdateEntryCommand(), condition));
+			waitForFoot.removeItem(selectedDingRoom.getRoom().getRoomNum());
+		}
+		return cashed;
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
+		boolean cashed = false;
 		if (command.equals("true")) {
 			if (selectedDingRoom != null) {
-				foot(selectedDingRoom);
+				cashed = foot(selectedDingRoom);
 				selectedDingRoom = null;
 			} else {
 				String str = (String) waitForFoot.getSelectedItem();
@@ -219,11 +226,13 @@ public class FootInfo extends BasePanel implements ActionListener, ItemListener 
 					Map condition = new HashMap();
 					condition.put("roomNum", str);
 					selectedDingRoom = (DingRoom) ((List)CommandService.getInstance().execute(new DingRoomServiceCommand(DingRoomServiceCommand.getUnfootDingRoomByRoomNumCommand(), condition), false)).get(0);
-					foot(selectedDingRoom);
+					cashed = foot(selectedDingRoom);
 					selectedDingRoom = null;
 				}
 			}
-			JOptionPane.showMessageDialog(FootInfo.this, "已结算", "提示信息", JOptionPane.INFORMATION_MESSAGE);
+			if (cashed) {
+				JOptionPane.showMessageDialog(FootInfo.this, "已结算", "提示信息", JOptionPane.INFORMATION_MESSAGE);				
+			}
 		}
 	}
 
@@ -233,7 +242,5 @@ public class FootInfo extends BasePanel implements ActionListener, ItemListener 
 
 	@Override
 	public void refresh() {
-		// TODO Auto-generated method stub
-		
 	}
 }
