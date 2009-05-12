@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -237,6 +239,15 @@ public class DingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 			String txt1 = jTextField1.getText(); // 5
 			System.out.println(txt1);
 			String txt2 = jTextField2.getText(); // 6
+			String regEx = "^[1-9](\\d{14}|\\d{17})";
+			Pattern pat = Pattern.compile(regEx);   
+			Matcher mat = pat.matcher(txt2);   
+			boolean rs = mat.matches();
+			if (!rs) {
+				JOptionPane.showMessageDialog(this, "身份证有误！", "错误提示",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			/*/
 			System.out.println(str);
 			String box2 = (String) jLabel3.getText(); // 2
@@ -317,7 +328,6 @@ public class DingRoomFrame1 extends JDialog implements ActionListener, ItemListe
 				sqle.printStackTrace();
 				JOptionPane.showMessageDialog(this, "写入数据失败！", "失败",
 						JOptionPane.ERROR_MESSAGE);
-				System.out.println("出错aaa");
 			}
 
 		}

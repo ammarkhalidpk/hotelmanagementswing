@@ -131,6 +131,11 @@ public class UseraddFrame extends JDialog implements ActionListener {
 
 			String txtName1 = txtName.getText();
 			String pwd1 = pwd.getText();
+			if (pwd1 == null || pwd1.equals("")) {
+				JOptionPane.showMessageDialog(this, "密码不能为空！", "错误提示",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			Role role = (Role) cbo.getSelectedItem();
 			try {
 				if (role.getCode().equals("admin")) {
