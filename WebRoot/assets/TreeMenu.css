@@ -1,0 +1,46 @@
+body {
+	font-size: 12px;
+}
+/*Tree Menu Core Css Start*/
+.close ul {
+	display: none;
+}
+.child img.flag {
+	background: none;
+	cursor: default;
+}
+.TreeMenu a, .TreeMenu a:visited, .TreeMenu a:active {
+	color: #666;
+	text-decoration: none;
+}
+.TreeMenu a:hover {
+	color: #F00;
+	text-decoration: underline;
+}
+.TreeMenu ul {
+	padding: 0;
+	margin: 0 0 0 17px;
+}
+.TreeMenu li {
+	list-style: none;
+	padding: 0;
+	font-size: 12px;
+	line-height: 15px;
+}
+.TreeMenu img.flag {
+	cursor: pointer;
+	vertical-align: middle;
+	width: 20px;
+	height: 25px;
+	font-size: 0;
+}
+.TreeMenu .open img.flag {
+	background: url(../images/folderopen.gif) no-repeat 0 0;
+}
+.TreeMenu .close img.flag {
+	background: url(../images/folder1.gif) no-repeat 0 0;
+}
+.TreeMenu .child img.flag {
+	background: url(../images/child.gif) no-repeat 3px 5px;
+}
+/*Tree Menu Core Css Start*/

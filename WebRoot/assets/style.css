@@ -1,0 +1,372 @@
+﻿@charset "utf-8";
+
+/* CSS Document */ /*dataDetail*/
+* {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+img {
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+}
+
+body {
+	margin: 0px;
+	border:0px;
+	padding:0px;
+}
+form{
+	padding:0px;
+	margin:0px;
+}
+table.dataDetail,table.dataTable {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border: 1px solid #4088B8;
+	border-bottom: 3px solid #4088B8;
+	border-top: 3px solid #4088B8;
+	width: 100%;
+	clear: both;
+}
+
+table.dataDetail {
+	border-bottom: 3px solid #4088B8;
+	border-top: 3px solid #4088B8;
+	empty-cells: show;
+	border-collapse: collapse;
+}
+
+table.dataDetail tr {
+	width: 100%;
+	display: block；
+}
+
+table.dataDetail caption {
+	text-align: left;
+	BACKGROUND: #EEEEEE;
+	padding: 5px;
+}
+
+table.dataDetail TH,table.dataDetail TD {
+	PADDING: 2px;
+	border-bottom: 1px solid #99ccff;
+	text-align: left;
+	VERTICAL-ALIGN: top;
+}
+
+table.dataDetail TH {
+	BACKGROUND: #DDEEFF;
+	border-right: 1px dotted #99ccff;
+	width: 20%;
+}
+
+table.dataDetail TD {
+	
+}
+
+table.dataTable {
+	border-bottom: 3px solid #4088B8;
+	border-top: 3px solid #4088B8;
+	empty-cells: show;
+	border-collapse: collapse;
+	clear: both;
+	float: none;
+}
+
+table.dataTable caption {
+	text-align: left;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	padding: 5px 10px;
+	color: #fff;
+	background: #36586F;
+}
+
+table.dataTable td {
+	padding: 2px;
+	border-bottom: 1px dashed #ccc;
+}
+
+table.dataTable tr.selectRow {
+	background-color: #efefef;
+}
+
+table.dataTable thead {
+	font-weight: bold;
+}
+
+table.dataTable thead td,table.dataTable thead th {
+	padding: 3px;
+	text-align: left;
+	background-color: #def;
+	border-bottom: 1px solid #4088B8;
+	background: url(../images/thead_bg.png);
+}
+
+table.dataTable th.action,table.dataTable td.action {
+	text-align: center;
+	border-left: none;
+	white-space: nowrap;
+}
+
+table.dataTable tr.odd {
+	background-color: #FFF;
+}
+
+table.dataTable tr.even {
+	background-color: #EEE;
+}
+
+table.dataTable img {
+	vertical-align: middle;
+}
+
+table.dataTable th.sorted {
+	background: url(../images/menu_back.png) repeat-x;
+}
+
+table.dataTable th a,table.dataTable th a:visited {
+	display: block;
+	padding-right: 10px;
+	background: no-repeat left center;
+}
+
+table.dataTable th a:hover {
+	text-decoration: underline;
+	color: black;
+}
+
+table.dataTable th.sorted a,th.sortable a {
+	display: block;
+}
+
+table.dataTable th.sortable a {
+	background: no-repeat right center;
+	background-image: url(../images/arrow_off.png);
+}
+
+table.dataTable th.asc a {
+	background: no-repeat right center;
+	background-image: url(../images/arrow_down.png);
+}
+
+table.dataTable th.desc a {
+	background: no-repeat right center;
+	background-image: url(../images/arrow_up.png);
+}
+
+table.dataTable td {
+	border-left: 1px solid #4088B8;
+	border-right: 1px solid #4088B8;
+}
+
+.statusEnded {
+	background-color: #FFCCCC;
+}
+
+.statusRunning {
+	background-color: #CCFFCC;
+}
+
+.statusSuspended {
+	background-color: #FFFFCC;
+}
+
+.statusNotstart {
+	background-color: #99CCFF;
+}
+
+.filter {
+	display: none;
+}
+
+h1 {
+	font-size: 15px;
+	padding: 5px;
+	padding-left: 15px;
+
+	border-bottom: 1px solid #333;
+	margin: 0px;
+	background-color: #369;
+	color: #FFFFFF;
+}
+
+h1 img {
+	vertical-align: middle;
+	margin-right: 5px;
+}
+
+div.menubar {
+	padding: 5px;
+	float: right;
+	color: #FFFFFF;
+	background-color:#369;
+}
+
+div.menubar a {
+	padding: 2px;
+	white-space: nowrap;
+	margin: 2px;
+	text-decoration: none;
+	vertical-align: middle;
+	color: #FFFFFF;
+}
+
+div.menubar a:hover {
+	margin: 1px;
+	background-color: #69c;
+	border: 1px solid #aaddff;
+	color: #fff;
+}
+
+div.menubar a img {
+	position: relative;
+	border: none;
+	height: 16px;
+	width: 16px;
+	padding-right: 5px;
+	float: none;
+	left: 0px;
+	top: 3px;
+}
+
+ul.actions {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+ul.actions li {
+	float: left;
+	padding: 2px;
+	display: inline;
+}
+
+ul.actions li a {
+	color: #003366;
+	line-height: 1.2em;
+}
+
+ul.actions li a:hover {
+	color: #0066CC;
+	text-decoration: none;
+}
+
+ul.actions li.separater {
+	width: 0px;
+	border-left: 1px solid #666666;
+}
+
+ul.action {
+	margin: 0px;
+	padding: 0;
+	float: left;
+	width: 100%;
+	border-bottom: 1px solid #564c66;
+	margin-bottom: 5px;
+	background-image: url(../images/bar.png);
+	background-repeat: repeat;
+	background-position: center center;
+	font-size: 13px;
+}
+
+ul.action li {
+	display: inline;
+}
+
+ul.action li.separater {
+	
+}
+
+ul.action li a {
+	float: left;
+	padding: 5px;
+	text-decoration: none;
+	border-right: 1px solid #564c66;
+	color: #000000;
+	line-height: 1.2em;
+}
+
+ul.action li.right a {
+	float: right;
+	border-right: none;
+	border-left: 1px solid #564c66;
+}
+
+ul.action li.end {
+	clear: left;
+	border-right: none;
+}
+
+ul.action li a:visited {
+	
+}
+
+ul.action li a:hover {
+	color: #FFFFFF;
+	background-image: url(../images/gradient_title_blue.gif);
+	background-repeat: repeat-x;
+	background-position: center center;
+}
+
+ul.action li img {
+	margin-right: 5px;
+}
+
+ul.actionmessage,ul.actionerror {
+	margin: 10px;
+	padding: 5px;
+	display: block;
+	background-repeat: no-repeat;
+	background-position: 5px 5px;
+	padding-left: 25px;
+	clear: both;
+	list-style: none;
+}
+
+ul.actionmessage li,ul.actionerror li {
+	margin: 0px;
+	padding: 0px;
+}
+
+ul.actionmessage {
+	background-color: #DDFFDD;
+	border: 1px solid #009900;
+	background-image: url(../images/icons/green_info.gif);
+}
+
+ul.actionerror {
+	background-color: #FCC;
+	border: 1px solid #C00;
+	background-image: url(../images/icons/red_info.gif);
+}
+
+span#loading {
+	white-space: normal;
+	padding: 4px;
+	padding-left: 20px;
+	padding-right: 30px;
+	margin: 10px;
+	border: 1px solid #F0C000;
+	background: #FFFFCE url(../images/loading.gif) no-repeat 3px center;
+}
+.token{
+	filter:alpha(opacity=10);
+  	-moz-opacity:0.12;
+  	opacity:0.12;
+  	background-color:#000;
+}
+.tokenHover{
+	background-color: url(../images/space.gif);
+
+}
+.tokenHover .info{
+	display:block;
+}
+.token .info{
+	display:none;
+}
+

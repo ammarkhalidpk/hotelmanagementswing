@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.action.extension" value="action" />
+    <!--<constant name="struts.objectFactory" value="spring" />-->
+
+    <include file="example.xml"/>
+    <include file="hotel.xml"/>
+
+
+    <package name="default" namespace="/" extends="struts-default">
+    	<interceptors>
+			<!-- 自定义拦截器 -->
+			<interceptor name="contextInter"
+				class="hotel.ContextInerceptor" />
+			<!-- 拦截器栈 -->
+			<interceptor-stack name="appStack">
+				<interceptor-ref name="contextInter" />
+				
+				<!-- 
+				struts2自身默认拦截器栈
+				-->
+				<interceptor-ref name="defaultStack" />
+				
+			</interceptor-stack>
+		</interceptors>
+		
+        <default-action-ref name="index" />
+        <action name="index">
+        	<!-- 配置拦截器栈 --> 
+			<interceptor-ref name="appStack" />
+            <result type="redirectAction">
+                <param name="actionName">HelloWorld</param>
+                <param name="namespace">/example</param>
+            </result>
+        </action>
+    </package>
+
+    <!-- Add packages here -->
+
+</struts>

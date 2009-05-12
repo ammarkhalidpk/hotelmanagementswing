@@ -1,0 +1,62 @@
+.tabGroup {
+	margin: 0px;
+	padding: 0px;
+	white-space:nowrap;
+	clear:both;
+
+}
+* html .tabGroup {
+	width: 100%;
+}
+.tabGroup li {
+	position: relative;
+	top: 1px;
+	float: left;
+	margin: 0px 2px;
+	font-weight:bold;
+	background-color: #EEE;
+	list-style: none;
+	border: solid 1px #666;
+	cursor: pointer;
+	vertical-align:bottom;
+	background-repeat:repeat-x;
+	padding:2px 20px 2px 22px;
+	white-space:nowrap;
+	margin-top:5px;	
+}
+.tabGroup li span {
+	display:block;
+	padding:2px 20px 2px 22px;
+	background: no-repeat 2px center;
+}
+.tabGroup li.tab {
+	background-image:url(../images/tab_normal.gif);
+}
+.tabGroup li.tabSelected {
+	background-image:url(../images/tab_sel.gif);
+	border-bottom:none;
+	border-top: solid 2px #369;
+	cursor: default;
+}
+.tabGroup li.tabHover {
+	background-image:url(../images/tab_hover.gif);
+	border-top: solid 1px #666;
+}
+.tabContentGroup {
+	clear: left;
+	border-top: 1px solid #999;
+	margin-bottom: 1em;
+	padding: 3px;
+}
+.tabContentGroup div.tabContent {
+	display:none;
+}
+.tabContentGroup div.activeContent {
+	display:block;
+}
+.tabContentGroup div{
+	display:none;
+}
+.tabContentGroup div div{
+	display:block;
+}

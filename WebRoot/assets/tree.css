@@ -1,0 +1,77 @@
+/*
+	李亦然 
+	无限级树
+	参看tree.js
+*/
+
+.treemenu {
+	margin:5px;
+	margin-left:12px;
+	display:block;
+	padding:0px;
+	/*border-left:1px dotted #336699;*/
+	list-style-type:none;
+	white-space:nowrap;
+}
+.treemenu UL {	
+	margin:0px;
+	margin-left:5px;
+	padding:0px;
+	/*border-left:1px dotted #336699;*/
+	list-style-type:none;
+	white-space:nowrap;
+}
+.treemenu LI {
+	padding:3px;
+	padding-right:0px;
+	margin-top:0px;
+	margin-bottom:0px;	
+	white-space:nowrap;
+	padding-left:0.5em;
+	position: relative; 
+	height:auto;
+	top:auto;
+	vertical-align:middle;
+	display:block;
+}
+.treemenu a img{
+	border:none;
+	margin:0px;
+	position:absolute;  
+	left:8px;
+	top:2px;
+	width:16px;
+	height:16px;
+	vertical-align:top;
+}
+
+.treemenu img.branch {
+	margin-left:-1em;
+	cursor:pointer;
+	padding:2px;
+	position:absolute;
+	padding-left:0em;
+	vertical-align:middle;
+	width:11px;
+	height:11px;
+}
+
+.treemenu a{
+	text-decoration:none;
+	margin:0px;
+
+	padding:2px 3px 2px 21px;
+	white-space:nowrap;
+	color:#000000;	
+	border:0px;
+	position:static;
+}
+
+.treemenu a:hover{
+	TEXT-DECORATION: none;
+	margin:0px;
+	padding:1px 2px 1px 20px;
+	background-color:#EEE;
+	border:1px solid #888;	
+	
+}

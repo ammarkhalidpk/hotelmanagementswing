@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <package name="apps" namespace="/apps" extends="default">
+
+        <action name="HelloWorld" class="example.HelloWorld">
+        	<!-- 配置拦截器栈 --> 
+			<interceptor-ref name="appStack" />
+            <result>/example/HelloWorld.jsp</result>
+        </action>
+
+        <action name="Login_*" method="{1}" class="example.Login">
+        	<!-- 配置拦截器栈 --> 
+			<interceptor-ref name="appStack" />
+            <result name="input">/example/Login.jsp</result>
+            <result type="redirectAction">Menu</result>
+        </action>
+
+        <action name="*" class="example.ExampleSupport">
+        	<!-- 配置拦截器栈 --> 
+			<interceptor-ref name="appStack" />
+            <result>/example/{1}.jsp</result>
+        </action>
+
+        <!-- Add actions here -->
+        
+        <action name="register"
+        		class="hotel.Register">
+        	<interceptor-ref name="appStack" />
+        	<result name="success">/pages/cn/RegisterSuccess.jsp</result>
+			<result name="error">/pages/cn/Register.jsp</result>
+			<result name="input">/pages/cn/Register.jsp</result>
+        </action>
+        
+        <action name="loginAction"
+        		class="hotel.LoginAction">
+        	<interceptor-ref name="appStack" />
+        	<result name="success" type="redirect">/pages/cn/reservation.jsp</result>
+			<result name="input" type="redirect">/pages/cn/reservation.jsp</result>
+        </action>
+        
+        <action name="logoutAction"
+        		class="hotel.LogoutAction">
+        	<interceptor-ref name="appStack" />
+        	<result name="success" type="redirect">/pages/cn/reservation.jsp</result>
+        </action>
+        
+        <action name="queryRoomAction"
+        		class="hotel.BaseServiceAction"
+        		method="queryRoomAction">
+        	<interceptor-ref name="appStack" />
+        	<result name="success">/pages/cn/freeRoom.jsp</result>
+        </action>
+        
+        <action name="myConsume"
+        		class="hotel.BaseServiceAction"
+        		method="myConsume">
+        	<interceptor-ref name="appStack" />
+        	<result name="success">/pages/cn/myConsume.jsp</result>
+        </action>
+        
+    </package>
+</struts>

@@ -1,0 +1,84 @@
+/*
+	李亦然 
+	无限级树
+	参看tree.js
+*/
+
+.treemenu {
+	margin:5px;
+	margin-left:12px;
+	display:block;
+	padding:0px;
+
+	white-space:nowrap;
+}
+.treemenu UL {	
+	margin:0px;
+	margin-left:6px;
+	padding:0px;
+	white-space:nowrap;
+	list-style-type:none;
+}
+.treemenu LI {
+	margin:0px;
+	padding:1px;
+	padding-right:0px;
+	margin-top:0px;
+	margin-bottom:0px;	
+	white-space:nowrap;
+	padding-left:15px;
+	height:auto;
+	top:auto;
+	vertical-align:middle;
+	display:block;
+	list-style-type:none;
+	background: no-repeat;
+	background-image:url(../images/node.gif);
+}
+.treemenu li:last-child,
+.treemenu li.last-child
+{
+	background: no-repeat 0px 0px;
+	background-image:url(../images/node-last.gif);
+}
+
+
+
+.treemenu img.branch {
+	margin-top:2px;
+	margin-left:-12px;
+	cursor:pointer;
+	padding:2px;
+	position:absolute;
+	padding-left:0em;
+	vertical-align:middle;
+	width:9px;
+	height:9px;
+
+}
+
+.treemenu a{
+	margin:1px;
+	color:#000000;
+	border:0px;
+	display:block;
+	padding-left:20px;
+}
+
+.treemenu a:hover{
+	text-decoration:none;
+	margin:0px;
+	background-color:#f4f4f4;
+	border:1px solid #ccc;	
+
+}
+.treemenu a#select{
+	background-color:#def;
+	margin:0px;
+	border:1px solid #abc;	
+}
+.treemenu a img{
+	position:fixed;
+	margin-left:-20px;
+	vertical-align:middle;
+}
